@@ -23,7 +23,8 @@ SEVENEX.init = function() {
 	    ,"High Knees, Run in Place"
 	    ,"Alternating Lunges"
 	    ,"Push-ups with Rotation"
-	    ,"Side Plan"
+	    ,"Side Plank, Left"
+	    ,"Side Plank, Right"
     ];
 
     var drawScreen = function(){
