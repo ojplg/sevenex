@@ -8,6 +8,9 @@ SEVENEX.init = function() {
     var nextRedrawTime;
     var restTime;
 
+    var restTimeSpan = 2 * 1000;
+    var activityTimeSpan = 5 * 1000;
+
     var activities = [
     	"Jumping Jacks"
 	    ,"Wall Sit"
@@ -38,15 +41,15 @@ SEVENEX.init = function() {
 	document.body.appendChild(actDiv);
     }
 
-    var nowTime = function(){
-        var seconds = new Date().getTime() / 1000;
+    var nowTimeMillis = function(){
+        var seconds = new Date().getTime();
 	return seconds;
     }	
 
     var activityDiv = function(){
-	if ( nowTime() > nextRedrawTime ) {
+	if ( nowTimeMillis() > nextRedrawTime ) {
             if ( restTime ) {
-		nextRedrawTime = nowTime() + 3;
+		nextRedrawTime = nowTimeMillis() + activityTimeSpan; 
 		var name = activities[index];
                 index++;
 		restTime = false;
@@ -57,7 +60,7 @@ SEVENEX.init = function() {
             
     	        var actDiv = document.getElementById('actDiv');
                 actDiv.innerHTML = "Rest";
-                nextRedrawTime = nowTime() + 3;		
+                nextRedrawTime = nowTimeMillis() + restTimeSpan;		
                 restTime = true;
             }
 
@@ -69,7 +72,7 @@ SEVENEX.init = function() {
     var start = function(){
 	drawScreen();
 	restTime = true;
-	nextRedrawTime = nowTime() - 1;
+	nextRedrawTime = nowTimeMillis() - 1;
 	activityDiv();
     }
 
