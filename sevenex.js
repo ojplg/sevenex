@@ -8,8 +8,8 @@ SEVENEX.init = function() {
     var nextRedrawTime;
     var restTime;
 
-    var restTimeSpan = 2 * 1000;
-    var activityTimeSpan = 5 * 1000;
+    var restTimeSpan = 10 * 1000;
+    var activityTimeSpan = 30 * 1000;
 
     var activities = [
     	"Jumping Jacks"
