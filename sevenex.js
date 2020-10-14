@@ -39,6 +39,15 @@ SEVENEX.init = function() {
         document.body.appendChild(topDiv);
         document.body.appendChild(document.createElement('hr'));
 	document.body.appendChild(actDiv);
+
+	var nameSpan = document.createElement('span');
+        nameSpan.id = 'nameSpan';
+
+        var counterSpan = document.createElement('span');
+        counterSpan.id = 'counterSpan';
+
+	actDiv.appendChild(nameSpan);
+        actDiv.appendChild(counterSpan);
     }
 
     var nowTimeMillis = function(){
@@ -47,18 +56,19 @@ SEVENEX.init = function() {
     }	
 
     var activityDiv = function(){
-	if ( nowTimeMillis() > nextRedrawTime ) {
+
+        if ( nowTimeMillis() > nextRedrawTime ) {
             if ( restTime ) {
 		nextRedrawTime = nowTimeMillis() + activityTimeSpan; 
 		var name = activities[index];
                 index++;
 		restTime = false;
 
-    	        var actDiv = document.getElementById('actDiv');
+    	        var actDiv = document.getElementById('nameSpan');
                 actDiv.innerHTML = name;
 	    } else {
             
-    	        var actDiv = document.getElementById('actDiv');
+    	        var actDiv = document.getElementById('nameSpan');
                 actDiv.innerHTML = "Rest";
                 nextRedrawTime = nowTimeMillis() + restTimeSpan;		
                 restTime = true;
@@ -66,7 +76,11 @@ SEVENEX.init = function() {
 
 	}
 	
-	setTimeout(activityDiv, 500);
+	var remainingTime = Math.round((nextRedrawTime - nowTimeMillis()) / 1000);
+	var counterSpan = document.getElementById('counterSpan');
+        counterSpan.innerHTML = "0:" + remainingTime;
+
+	setTimeout(activityDiv, 50);
     }
 
     var start = function(){
