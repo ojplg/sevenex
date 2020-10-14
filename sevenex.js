@@ -78,7 +78,7 @@ SEVENEX.init = function() {
 	
 	var remainingTime = Math.round((nextRedrawTime - nowTimeMillis()) / 1000);
 	var counterSpan = document.getElementById('counterSpan');
-        counterSpan.innerHTML = "0:" + remainingTime;
+        counterSpan.innerHTML = "&nbsp;&nbsp;&nbsp;" + remainingTime;
 
 	setTimeout(activityDiv, 50);
     }
