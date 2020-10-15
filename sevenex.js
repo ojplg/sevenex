@@ -10,7 +10,7 @@ SEVENEX.init = function() {
     var that = {};
 
     var restTimeSpan = 1 * 1000;
-    var activityTimeSpan = 3 * 1000;
+    var activityTimeSpan = 30 * 1000;
 
     var activityNames = [
     	"Jumping Jacks"
@@ -59,7 +59,8 @@ SEVENEX.init = function() {
     var newProgress = function(){
         var p = {};
         p.index = 0;
-        p.nextRedrawTime = nowTimeMillis() - 1;
+        p.timeRemainingUntilNext = -1;
+        p.lastMeasuredTime = nowTimeMillis();
         p.running = false;
 
         p.toggle = function() {
@@ -67,6 +68,7 @@ SEVENEX.init = function() {
 
             var progressButton = document.getElementById('progressButton');
             progressButton.innerHTML = p.running ? "Pause" : "Resume";
+            p.lastMeasuredTime = nowTimeMillis();
         }
 
         return p;
@@ -114,21 +116,24 @@ SEVENEX.init = function() {
     var activityDiv = function(){
 
         if ( progress.running ){
+            
+            var timeElapsed = nowTimeMillis() - progress.lastMeasuredTime;
+            progress.lastMeasuredTime = nowTimeMillis();
 
-            if ( nowTimeMillis() > progress.nextRedrawTime ) {
+            if ( 0 > progress.timeRemainingUntilNext ) {
     
                 var activity = program.activities[progress.index];
                 progress.index++;
             
                 var actSpan = document.getElementById('nameSpan');
                 actSpan.innerHTML = activity.name;
-                progress.nextRedrawTime = nowTimeMillis() + activity.time;
+                progress.timeRemainingUntilNext = activity.time;
 	        }
 	
-	        var remainingTime = Math.round(
-                (progress.nextRedrawTime - nowTimeMillis()) / 1000);
+	        var remainingTime = Math.round( progress.timeRemainingUntilNext / 100);
 	        var counterSpan = document.getElementById('counterSpan');
             counterSpan.innerHTML = "&nbsp;&nbsp;&nbsp;" + remainingTime;
+            progress.timeRemainingUntilNext -= timeElapsed;
 
         }
 	    setTimeout(activityDiv, 50);
