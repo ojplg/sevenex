@@ -11,7 +11,7 @@ SEVENEX.init = function() {
     var restTimeSpan = 10 * 1000;
     var activityTimeSpan = 30 * 1000;
 
-    var activities = [
+    var activityNames = [
     	"Jumping Jacks"
 	    ,"Wall Sit"
 	    ,"Push-ups"
@@ -27,6 +27,24 @@ SEVENEX.init = function() {
 	    ,"Side Plank, Right"
     ];
 
+    var activities;
+
+    var newInterval = function(name){
+        return {
+            name: name,
+            time: activityTimeSpan,
+            isRest: false
+        };
+    }	
+
+    var newRest = function(){
+        return {
+            name: "Rest",
+            time: restTimeSpan,
+            isRest: true
+        };
+    }
+
     var drawScreen = function(){
         console.log("Sevenex initializing");
         var body = document.getElementsByTagName('body');
@@ -34,61 +52,53 @@ SEVENEX.init = function() {
         var topDiv = document.createElement('div');
         topDiv.innerHTML = "Sevenex. Countdown.";
 
-	var actDiv = document.createElement('div');
-	actDiv.id = 'actDiv';
+    	var actDiv = document.createElement('div');
+	    actDiv.id = 'actDiv';
 
         document.body.appendChild(topDiv);
         document.body.appendChild(document.createElement('hr'));
-	document.body.appendChild(actDiv);
+    	document.body.appendChild(actDiv);
 
-	var nameSpan = document.createElement('span');
+	    var nameSpan = document.createElement('span');
         nameSpan.id = 'nameSpan';
 
         var counterSpan = document.createElement('span');
         counterSpan.id = 'counterSpan';
 
-	actDiv.appendChild(nameSpan);
+	    actDiv.appendChild(nameSpan);
         actDiv.appendChild(counterSpan);
     }
 
     var nowTimeMillis = function(){
-        var seconds = new Date().getTime();
-	return seconds;
+        var millis = Date.now();
+	    return millis;
     }	
 
     var activityDiv = function(){
 
         if ( nowTimeMillis() > nextRedrawTime ) {
-            if ( restTime ) {
-		nextRedrawTime = nowTimeMillis() + activityTimeSpan; 
-		var name = activities[index];
-                index++;
-		restTime = false;
-
-    	        var actDiv = document.getElementById('nameSpan');
-                actDiv.innerHTML = name;
-	    } else {
+            var activity = activities[index];
+            index++;
             
-    	        var actDiv = document.getElementById('nameSpan');
-                actDiv.innerHTML = "Rest";
-                nextRedrawTime = nowTimeMillis() + restTimeSpan;		
-                restTime = true;
-            }
-
-	}
+            var actSpan = document.getElementById('nameSpan');
+            actSpan.innerHTML = activity.name;
+            nextRedrawTime = nowTimeMillis() + activity.time;
+	    }
 	
-	var remainingTime = Math.round((nextRedrawTime - nowTimeMillis()) / 1000);
-	var counterSpan = document.getElementById('counterSpan');
+	    var remainingTime = Math.round((nextRedrawTime - nowTimeMillis()) / 1000);
+	    var counterSpan = document.getElementById('counterSpan');
         counterSpan.innerHTML = "&nbsp;&nbsp;&nbsp;" + remainingTime;
 
-	setTimeout(activityDiv, 50);
+	    setTimeout(activityDiv, 50);
     }
 
     var start = function(){
-	drawScreen();
-	restTime = true;
-	nextRedrawTime = nowTimeMillis() - 1;
-	activityDiv();
+	    drawScreen();
+    	restTime = true;
+	    nextRedrawTime = nowTimeMillis() - 1;
+        activities = activityNames.flatMap( 
+                name => [ newInterval(name), newRest() ] );
+	    activityDiv();
     }
 
     that.start = start;
