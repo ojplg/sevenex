@@ -2,14 +2,15 @@ window.SEVENEX = {}
 
 SEVENEX.init = function() {
     
+    var nowTimeMillis = function(){
+        var millis = Date.now();
+	    return millis;
+    }	
+
     var that = {};
 
-    var index = 0;
-    var nextRedrawTime;
-    var restTime;
-
-    var restTimeSpan = 10 * 1000;
-    var activityTimeSpan = 30 * 1000;
+    var restTimeSpan = 1 * 1000;
+    var activityTimeSpan = 3 * 1000;
 
     var activityNames = [
     	"Jumping Jacks"
@@ -27,7 +28,8 @@ SEVENEX.init = function() {
 	    ,"Side Plank, Right"
     ];
 
-    var activities;
+    var program;
+    var progress;
 
     var newInterval = function(name){
         return {
@@ -43,6 +45,22 @@ SEVENEX.init = function() {
             time: restTimeSpan,
             isRest: true
         };
+    }
+
+    var newProgram = function(names){
+        var p = {};
+        p.activities = names.flatMap(
+                name => [ newInterval(name), newRest() ] );
+        p.totalTime = p.activities.reduce(
+                (sum,activity) => sum + activity.time );
+        return p;
+    }
+
+    var newProgress = function(){
+        var p = {};
+        p.index = 0;
+        p.nextRedrawTime = nowTimeMillis() - 1;
+        return p;
     }
 
     var drawScreen = function(){
@@ -69,23 +87,20 @@ SEVENEX.init = function() {
         actDiv.appendChild(counterSpan);
     }
 
-    var nowTimeMillis = function(){
-        var millis = Date.now();
-	    return millis;
-    }	
-
     var activityDiv = function(){
 
-        if ( nowTimeMillis() > nextRedrawTime ) {
-            var activity = activities[index];
-            index++;
+        if ( nowTimeMillis() > progress.nextRedrawTime ) {
+
+            var activity = program.activities[progress.index];
+            progress.index++;
             
             var actSpan = document.getElementById('nameSpan');
             actSpan.innerHTML = activity.name;
-            nextRedrawTime = nowTimeMillis() + activity.time;
+            progress.nextRedrawTime = nowTimeMillis() + activity.time;
 	    }
 	
-	    var remainingTime = Math.round((nextRedrawTime - nowTimeMillis()) / 1000);
+	    var remainingTime = Math.round(
+            (progress.nextRedrawTime - nowTimeMillis()) / 1000);
 	    var counterSpan = document.getElementById('counterSpan');
         counterSpan.innerHTML = "&nbsp;&nbsp;&nbsp;" + remainingTime;
 
@@ -94,10 +109,8 @@ SEVENEX.init = function() {
 
     var start = function(){
 	    drawScreen();
-    	restTime = true;
-	    nextRedrawTime = nowTimeMillis() - 1;
-        activities = activityNames.flatMap( 
-                name => [ newInterval(name), newRest() ] );
+        program = newProgram(activityNames);
+        progress = newProgress();
 	    activityDiv();
     }
 
