@@ -89,9 +89,11 @@ SEVENEX.init = function() {
 
 	    var nameSpan = document.createElement('span');
         nameSpan.id = 'nameSpan';
+        nameSpan.className = 'activity_name';
 
         var counterSpan = document.createElement('span');
         counterSpan.id = 'counterSpan';
+        counterSpan.className = 'activity_time_left';
 
 	    actDiv.appendChild(nameSpan);
         actDiv.appendChild(counterSpan);
