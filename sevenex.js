@@ -60,6 +60,12 @@ SEVENEX.init = function() {
         var p = {};
         p.index = 0;
         p.nextRedrawTime = nowTimeMillis() - 1;
+        p.running = false;
+
+        p.toggle = function() {
+            p.running = true;
+        }
+
         return p;
     }
 
@@ -73,9 +79,8 @@ SEVENEX.init = function() {
     	var actDiv = document.createElement('div');
 	    actDiv.id = 'actDiv';
 
-        document.body.appendChild(topDiv);
-        document.body.appendChild(document.createElement('hr'));
-    	document.body.appendChild(actDiv);
+        var controlDiv = document.createElement('div');
+        controlDiv.id = 'controlDiv';
 
 	    var nameSpan = document.createElement('span');
         nameSpan.id = 'nameSpan';
@@ -85,25 +90,44 @@ SEVENEX.init = function() {
 
 	    actDiv.appendChild(nameSpan);
         actDiv.appendChild(counterSpan);
+
+        var progressButton = document.createElement('button');
+        progressButton.id = 'progressButton';
+        progressButton.name = 'progress';
+        progressButton.value = 'progress';
+        progressButton.innerHTML = 'Start';
+        progressButton.type = 'button';
+
+        controlDiv.appendChild(progressButton);
+
+        document.body.appendChild(topDiv);
+        document.body.appendChild(document.createElement('hr'));
+    	document.body.appendChild(actDiv);
+        document.body.appendChild(document.createElement('hr'));
+        document.body.appendChild(controlDiv);
+
     }
 
     var activityDiv = function(){
 
-        if ( nowTimeMillis() > progress.nextRedrawTime ) {
+        if ( progress.running ){
 
-            var activity = program.activities[progress.index];
-            progress.index++;
+            if ( nowTimeMillis() > progress.nextRedrawTime ) {
+    
+                var activity = program.activities[progress.index];
+                progress.index++;
             
-            var actSpan = document.getElementById('nameSpan');
-            actSpan.innerHTML = activity.name;
-            progress.nextRedrawTime = nowTimeMillis() + activity.time;
-	    }
+                var actSpan = document.getElementById('nameSpan');
+                actSpan.innerHTML = activity.name;
+                progress.nextRedrawTime = nowTimeMillis() + activity.time;
+	        }
 	
-	    var remainingTime = Math.round(
-            (progress.nextRedrawTime - nowTimeMillis()) / 1000);
-	    var counterSpan = document.getElementById('counterSpan');
-        counterSpan.innerHTML = "&nbsp;&nbsp;&nbsp;" + remainingTime;
+	        var remainingTime = Math.round(
+                (progress.nextRedrawTime - nowTimeMillis()) / 1000);
+	        var counterSpan = document.getElementById('counterSpan');
+            counterSpan.innerHTML = "&nbsp;&nbsp;&nbsp;" + remainingTime;
 
+        }
 	    setTimeout(activityDiv, 50);
     }
 
@@ -111,6 +135,8 @@ SEVENEX.init = function() {
 	    drawScreen();
         program = newProgram(activityNames);
         progress = newProgress();
+        var progressButton = document.getElementById('progressButton');
+        progressButton.onclick = function(){ progress.toggle();  }
 	    activityDiv();
     }
 
