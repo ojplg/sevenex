@@ -63,7 +63,10 @@ SEVENEX.init = function() {
         p.running = false;
 
         p.toggle = function() {
-            p.running = true;
+            p.running = ! p.running;
+
+            var progressButton = document.getElementById('progressButton');
+            progressButton.innerHTML = p.running ? "Pause" : "Resume";
         }
 
         return p;
