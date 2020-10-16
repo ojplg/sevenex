@@ -91,9 +91,6 @@ SEVENEX.init = function() {
     	var actDiv = document.createElement('div');
 	    actDiv.id = 'actDiv';
 
-        var controlDiv = document.createElement('div');
-        controlDiv.id = 'controlDiv';
-
 	    var nameSpan = document.createElement('div');
         nameSpan.id = 'nameSpan';
         nameSpan.className = 'activity_name';
@@ -111,8 +108,13 @@ SEVENEX.init = function() {
         progressButton.value = 'progress';
         progressButton.innerHTML = 'Start';
         progressButton.type = 'button';
+        progressButton.className = 'progress_button';
 
+        var controlDiv = document.createElement('div');
+        controlDiv.id = 'controlDiv';
         controlDiv.appendChild(progressButton);
+
+        actDiv.appendChild(controlDiv);
 
         gridDiv.appendChild(leftColumnDiv);
         gridDiv.appendChild(actDiv);
@@ -121,7 +123,6 @@ SEVENEX.init = function() {
         document.body.appendChild(topDiv);
         document.body.appendChild(document.createElement('hr'));
     	document.body.appendChild(gridDiv);
-        document.body.appendChild(controlDiv);
 
     }
 

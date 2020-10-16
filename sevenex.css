@@ -6,8 +6,17 @@ body {
     grid-template-columns: 1fr 4fr;
 }
 .activity_name {
-	font-size: 100%;
+	font-size: 500%;
+    background-color: lightblue;
 }
 .activity_time_left {
-    font-size: 100%
+    font-size: 500%;
+    background-color: lightblue;
+}
+#left_column {
+    background-color: lightgrey;
+}
+.progress_button {
+    background-color: green;
+    font-size: 400%;
 }
