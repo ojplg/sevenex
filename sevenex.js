@@ -86,7 +86,10 @@ SEVENEX.init = function() {
 
         var leftColumnDiv = document.createElement('div');
         leftColumnDiv.id = 'left_column';
-        leftColumnDiv.innerHTML = 'LEFT COLUMN';
+
+        var stagesDiv = document.createElement('div');
+        stagesDiv.id = 'stagesDiv';
+        leftColumnDiv.appendChild(stagesDiv);
 
     	var actDiv = document.createElement('div');
 	    actDiv.id = 'actDiv';
@@ -152,9 +155,21 @@ SEVENEX.init = function() {
 	    setTimeout(activityDiv, 50);
     }
 
+
+    var populateStages = function(activityNames){
+        var stagesDiv = document.getElementById('stagesDiv');
+        activityNames.forEach( name => {
+            var actDiv = document.createElement('div');
+            actDiv.innerHTML = name;
+            stagesDiv.appendChild(actDiv);
+        });   
+    }
+
+
     var start = function(){
 	    drawScreen();
         program = newProgram(activityNames);
+        populateStages(activityNames);
         progress = newProgress();
         var progressButton = document.getElementById('progressButton');
         progressButton.onclick = function(){ progress.toggle();  }
