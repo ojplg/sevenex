@@ -1,11 +1,13 @@
 body {
    font-family: Calibri, Candara, Segoe, sans-serif; 
 }
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+}
 .activity_name {
-	background-color: green;
-	font-size: 800%;
+	font-size: 100%;
 }
 .activity_time_left {
-    background-color: lightblue;
-    font-size: 1000%
+    font-size: 100%
 }

@@ -81,17 +81,24 @@ SEVENEX.init = function() {
         var topDiv = document.createElement('div');
         topDiv.innerHTML = "Sevenex. Countdown.";
 
+        var gridDiv = document.createElement('div');
+        gridDiv.className = 'grid';
+
+        var leftColumnDiv = document.createElement('div');
+        leftColumnDiv.id = 'left_column';
+        leftColumnDiv.innerHTML = 'LEFT COLUMN';
+
     	var actDiv = document.createElement('div');
 	    actDiv.id = 'actDiv';
 
         var controlDiv = document.createElement('div');
         controlDiv.id = 'controlDiv';
 
-	    var nameSpan = document.createElement('span');
+	    var nameSpan = document.createElement('div');
         nameSpan.id = 'nameSpan';
         nameSpan.className = 'activity_name';
 
-        var counterSpan = document.createElement('span');
+        var counterSpan = document.createElement('div');
         counterSpan.id = 'counterSpan';
         counterSpan.className = 'activity_time_left';
 
@@ -107,10 +114,13 @@ SEVENEX.init = function() {
 
         controlDiv.appendChild(progressButton);
 
+        gridDiv.appendChild(leftColumnDiv);
+        gridDiv.appendChild(actDiv);
+
+        document.body.appendChild(document.createElement('hr'));
         document.body.appendChild(topDiv);
         document.body.appendChild(document.createElement('hr'));
-    	document.body.appendChild(actDiv);
-        document.body.appendChild(document.createElement('hr'));
+    	document.body.appendChild(gridDiv);
         document.body.appendChild(controlDiv);
 
     }
