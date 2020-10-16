@@ -9,7 +9,7 @@ SEVENEX.init = function() {
 
     var that = {};
 
-    var restTimeSpan = 1 * 1000;
+    var restTimeSpan = 10 * 1000;
     var activityTimeSpan = 30 * 1000;
 
     var activityNames = [
@@ -146,13 +146,13 @@ SEVENEX.init = function() {
                 progress.timeRemainingUntilNext = activity.time;
 	        }
 	
-	        var remainingTime = Math.round( progress.timeRemainingUntilNext / 100);
+	        var remainingTime = Math.round( progress.timeRemainingUntilNext / 1000);
 	        var counterSpan = document.getElementById('counterSpan');
             counterSpan.innerHTML = "&nbsp;&nbsp;&nbsp;" + remainingTime;
             progress.timeRemainingUntilNext -= timeElapsed;
 
         }
-	    setTimeout(activityDiv, 50);
+	    setTimeout(activityDiv, 25);
     }
 
 
