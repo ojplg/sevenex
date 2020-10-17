@@ -20,3 +20,8 @@ body {
     background-color: green;
     font-size: 400%;
 }
+#creditDiv {
+    position: absolute;
+    right: 4px;
+    bottom: 4px;
+}

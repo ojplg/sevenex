@@ -137,10 +137,17 @@ SEVENEX.init = function() {
         gridDiv.appendChild(leftColumnDiv);
         gridDiv.appendChild(actDiv);
 
+        let creditDiv = document.createElement('div');
+        creditDiv.id = 'creditDiv';
+        creditDiv.innerHTML = 
+            'Code on <a href="https://github.com/ojplg/sevenex">github</a>.'
+            + 'Patches welcome!';
+
         document.body.appendChild(document.createElement('hr'));
         document.body.appendChild(topDiv);
         document.body.appendChild(document.createElement('hr'));
     	document.body.appendChild(gridDiv);
+        document.body.appendChild(creditDiv);
 
     }
 
