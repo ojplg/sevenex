@@ -129,7 +129,7 @@ SEVENEX.init = function() {
         var body = document.getElementsByTagName('body');
 
         var topDiv = document.createElement('div');
-        topDiv.innerHTML = "Sevenex. Countdown.";
+        topDiv.innerHTML = "<b>Sevenex.</b> An application for quick interval workouts.";
 
         var gridDiv = document.createElement('div');
         gridDiv.className = 'grid';
