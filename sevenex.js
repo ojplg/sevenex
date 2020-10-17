@@ -227,7 +227,20 @@ SEVENEX.init = function() {
             var elapsedTime = formatTime ( progress.totalTimeElapsed );
             var elapsedTimeValueSpan = document.getElementById('elapsedTimeValueSpan');
             elapsedTimeValueSpan.innerHTML = elapsedTime;
+
+            var totalRemainingTime = formatTime (
+                program.totalTime - progress.totalTimeElapsed );
+            var totalRemainingValueSpan = document.getElementById(
+                'totalRemainingTimeValueSpan');
+            totalRemainingValueSpan.innerHTML = totalRemainingTime;
+    
+            var percentComplete = Math.round(100*
+                progress.totalTimeElapsed/program.totalTime);
+            var percentCompleteValueSpan = document.getElementById(
+                'percentCompleteValueSpan');
+            percentCompleteValueSpan.innerHTML = percentComplete;
         }
+
 	    setTimeout(activityDiv, 25);
     }
 
@@ -258,6 +271,13 @@ SEVENEX.init = function() {
         let elapsedTimeDiv = newStatDiv("elapsedTime", "Elapsed Time",
             formatTime(0));
         statsDiv.appendChild(elapsedTimeDiv);
+
+        let remainingTimeDiv = newStatDiv("totalRemainingTime", "Remaining Time",
+            formatTime(program.totalTime));
+        statsDiv.appendChild(remainingTimeDiv);
+
+        let percentCompleteDiv = newStatDiv("percentComplete", "Percent Complete", "0");
+        statsDiv.appendChild(percentCompleteDiv);
     }
 
     var initStages = function(activityNames){

@@ -7,5 +7,4 @@ Timer for [NYTimes Seven Minute Workout](https://www.nytimes.com/guides/well/act
  * Form to create new workouts
  * Five second countdown before start
  * Detect end of workout
- * New stats: total time, total time done, total time remaining, percent complete
  * Indicate complete/active/upcoming in side panel
