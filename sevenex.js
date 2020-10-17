@@ -7,6 +7,16 @@ SEVENEX.init = function() {
 	    return millis;
     }	
 
+    var formatTime = function(millis){
+        let totalSeconds = Math.round(millis/1000);
+        let minutes = totalSeconds > 60 ?
+                Math.round(totalSeconds/60) : 0;
+        let seconds = totalSeconds%60;
+        let secondsF = seconds >= 10 ? seconds : "0" + seconds;
+
+        return minutes + ":" + secondsF;
+    }
+
     var that = {};
 
     var restTimeSpan = 10 * 1000;
@@ -146,7 +156,7 @@ SEVENEX.init = function() {
                 progress.timeRemainingUntilNext = activity.time;
 	        }
 	
-	        var remainingTime = Math.round( progress.timeRemainingUntilNext / 1000);
+	        var remainingTime = formatTime( progress.timeRemainingUntilNext );
 	        var counterSpan = document.getElementById('counterSpan');
             counterSpan.innerHTML = "&nbsp;&nbsp;&nbsp;" + remainingTime;
             progress.timeRemainingUntilNext -= timeElapsed;
