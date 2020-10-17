@@ -153,13 +153,16 @@ SEVENEX.init = function() {
 	    var nameDiv = document.createElement('div');
         nameDiv.id = 'nameDiv';
         nameDiv.className = 'activity_name';
-
+        nameDiv.innerHTML = '&nbsp;';
+    
         var counterDiv = document.createElement('div');
         counterDiv.id = 'counterDiv';
         counterDiv.className = 'activity_time_left';
+        counterDiv.innerHTML = '&nbsp;';
 
         let nextActivityDiv = document.createElement('div');
         nextActivityDiv.id = 'nextActivityDiv';
+        nextActivityDiv.innerHTML = '&nbsp;';
 
 	    actDiv.appendChild(nameDiv);
         actDiv.appendChild(counterDiv);
