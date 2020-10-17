@@ -30,3 +30,6 @@ body {
     background-color: DarkCyan;
     color: DarkSlateGrey;
 }
+span.left_column_value {
+    float: right;
+}

@@ -90,6 +90,7 @@ SEVENEX.init = function() {
         p.timeRemainingUntilNext = -1;
         p.lastMeasuredTime = nowTimeMillis();
         p.running = false;
+        p.totalTimeElapsed = 0;
 
         p.toggle = function() {
             p.running = ! p.running;
@@ -102,6 +103,7 @@ SEVENEX.init = function() {
         p.advanceTime = function(){
             let now = nowTimeMillis(); 
             let timeElapsed = now - p.lastMeasuredTime;
+            p.totalTimeElapsed += timeElapsed;
             p.lastMeasuredTime = now;
             let oldRemainingSeconds = Math.round(p.timeRemainingUntilNext/1000);
             p.timeRemainingUntilNext -= timeElapsed;         
@@ -142,6 +144,7 @@ SEVENEX.init = function() {
         stagesDiv.id = 'stagesDiv';
         
         leftColumnDiv.appendChild(programStatsDiv);
+        leftColumnDiv.appendChild(document.createElement('hr'));
         leftColumnDiv.appendChild(stagesDiv);
 
     	var actDiv = document.createElement('div');
@@ -220,19 +223,44 @@ SEVENEX.init = function() {
 	        var remainingTime = formatTime( progress.timeRemainingUntilNext );
 	        var counterDiv = document.getElementById('counterDiv');
             counterDiv.innerHTML = remainingTime;
+
+            var elapsedTime = formatTime ( progress.totalTimeElapsed );
+            var elapsedTimeValueSpan = document.getElementById('elapsedTimeValueSpan');
+            elapsedTimeValueSpan.innerHTML = elapsedTime;
         }
 	    setTimeout(activityDiv, 25);
     }
 
 
-    var populateStats = function(program){
-        let statsDiv = document.getElementById('programStatsDiv');
-        statsDiv.innerHTML = "TOTAL TIME " + formatTime(program.totalTime)
-            + "<br/><hr/>";
-        ;
+    var newStatDiv = function(baseId, labelName, value){
+        let newDiv = document.createElement('div');
+        newDiv.id = baseId + 'Div';
+        let labelSpan = document.createElement('span');
+        labelSpan.id = baseId + "LabelSpan";
+        labelSpan.innerHTML = labelName;
+        newDiv.appendChild(labelSpan);
+        let valueSpan = document.createElement('span');
+        valueSpan.id = baseId + "ValueSpan";
+        valueSpan.className = 'left_column_value'
+        valueSpan.innerHTML = value;
+        newDiv.appendChild(valueSpan);
+    
+        return newDiv;
     }
 
-    var populateStages = function(activityNames){
+    var initStats = function(program){
+        let statsDiv = document.getElementById('programStatsDiv');
+        
+        let totalTimeDiv = newStatDiv("totalTime", "Total Time",
+            formatTime(program.totalTime));
+        statsDiv.appendChild(totalTimeDiv);
+
+        let elapsedTimeDiv = newStatDiv("elapsedTime", "Elapsed Time",
+            formatTime(0));
+        statsDiv.appendChild(elapsedTimeDiv);
+    }
+
+    var initStages = function(activityNames){
         var stagesDiv = document.getElementById('stagesDiv');
         var index = 1;
         activityNames.forEach( name => {
@@ -247,8 +275,8 @@ SEVENEX.init = function() {
     var start = function(){
 	    drawScreen();
         program = newProgram(activityNames);
-        populateStats(program);
-        populateStages(activityNames);
+        initStats(program);
+        initStages(activityNames);
         progress = newProgress();
         var progressButton = document.getElementById('progressButton');
         progressButton.onclick = function(){ progress.toggle();  }
