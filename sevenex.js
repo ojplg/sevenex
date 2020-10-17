@@ -62,7 +62,7 @@ SEVENEX.init = function() {
         p.activities = names.flatMap(
                 name => [ newInterval(name), newRest() ] );
         p.totalTime = p.activities.reduce(
-                (sum,activity) => sum + activity.time );
+                (sum,activity) => sum + activity.time, 0 );
         return p;
     }
 
@@ -97,8 +97,13 @@ SEVENEX.init = function() {
         var leftColumnDiv = document.createElement('div');
         leftColumnDiv.id = 'left_column';
 
+        let programStatsDiv = document.createElement('div');
+        programStatsDiv.id = 'programStatsDiv';
+
         var stagesDiv = document.createElement('div');
         stagesDiv.id = 'stagesDiv';
+        
+        leftColumnDiv.appendChild(programStatsDiv);
         leftColumnDiv.appendChild(stagesDiv);
 
     	var actDiv = document.createElement('div');
@@ -166,11 +171,20 @@ SEVENEX.init = function() {
     }
 
 
+    var populateStats = function(program){
+        let statsDiv = document.getElementById('programStatsDiv');
+        statsDiv.innerHTML = "TOTAL TIME " + formatTime(program.totalTime)
+            + "<br/><hr/>";
+        ;
+    }
+
     var populateStages = function(activityNames){
         var stagesDiv = document.getElementById('stagesDiv');
+        var index = 1;
         activityNames.forEach( name => {
             var actDiv = document.createElement('div');
-            actDiv.innerHTML = name;
+            actDiv.innerHTML = index + ") " + name;
+            index++;
             stagesDiv.appendChild(actDiv);
         });   
     }
@@ -179,6 +193,7 @@ SEVENEX.init = function() {
     var start = function(){
 	    drawScreen();
         program = newProgram(activityNames);
+        populateStats(program);
         populateStages(activityNames);
         progress = newProgress();
         var progressButton = document.getElementById('progressButton');
