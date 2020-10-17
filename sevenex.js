@@ -7,6 +7,9 @@ SEVENEX.init = function() {
 	    return millis;
     }	
 
+    let tick = new Audio('tick.mp3');
+    let bark = new Audio('bark.mp3');
+
     var formatTime = function(millis){
         let totalSeconds = Math.round(millis/1000);
         let minutes = totalSeconds > 60 ?
@@ -79,6 +82,22 @@ SEVENEX.init = function() {
             var progressButton = document.getElementById('progressButton');
             progressButton.innerHTML = p.running ? "Pause" : "Resume";
             p.lastMeasuredTime = nowTimeMillis();
+        }
+
+        p.advanceTime = function(){
+            let now = nowTimeMillis(); 
+            let timeElapsed = now - p.lastMeasuredTime;
+            p.lastMeasuredTime = now;
+            let oldRemainingSeconds = Math.round(p.timeRemainingUntilNext/1000);
+            p.timeRemainingUntilNext -= timeElapsed;         
+            let newRemainingSeconds = Math.round(p.timeRemainingUntilNext/1000);
+            if( newRemainingSeconds > 0 &&
+                newRemainingSeconds < 5 &&
+                newRemainingSeconds != oldRemainingSeconds ){
+                tick.play();
+            }
+
+            return p.timeRemainingUntilNext < 0;
         }
 
         return p;
@@ -155,11 +174,12 @@ SEVENEX.init = function() {
 
         if ( progress.running ){
             
-            var timeElapsed = nowTimeMillis() - progress.lastMeasuredTime;
-            progress.lastMeasuredTime = nowTimeMillis();
+            let next = progress.advanceTime();
 
-            if ( 0 > progress.timeRemainingUntilNext ) {
+            if ( next ) {
     
+                bark.play();
+
                 var activity = program.activities[progress.index];
                 progress.index++;
             
@@ -171,8 +191,6 @@ SEVENEX.init = function() {
 	        var remainingTime = formatTime( progress.timeRemainingUntilNext );
 	        var counterSpan = document.getElementById('counterSpan');
             counterSpan.innerHTML = "&nbsp;&nbsp;&nbsp;" + remainingTime;
-            progress.timeRemainingUntilNext -= timeElapsed;
-
         }
 	    setTimeout(activityDiv, 25);
     }

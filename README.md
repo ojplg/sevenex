@@ -6,7 +6,6 @@ Timer for [NYTimes Seven Minute Workout](https://www.nytimes.com/guides/well/act
  * Server side to save/load workouts
  * Form to create new workouts
  * Five second countdown before start
- * Some sounds (five second tick down, bong to start new activity, buzzer at done)
  * Detect end of workout
  * New stats: total time, total time done, total time remaining, percent complete
  * Indicate complete/active/upcoming in side panel
