@@ -97,7 +97,11 @@ SEVENEX.init = function() {
                 tick.play();
             }
 
-            return p.timeRemainingUntilNext < 0;
+            let next = p.timeRemainingUntilNext < 0;
+            if (next) {
+                bark.play();
+            }
+            return next;
         }
 
         return p;
@@ -178,8 +182,6 @@ SEVENEX.init = function() {
 
             if ( next ) {
     
-                bark.play();
-
                 var activity = program.activities[progress.index];
                 progress.index++;
             
