@@ -9,4 +9,3 @@ Timer for [NYTimes Seven Minute Workout](https://www.nytimes.com/guides/well/act
  * Detect end of workout
  * New stats: total time, total time done, total time remaining, percent complete
  * Indicate complete/active/upcoming in side panel
- * Next activity in main panel
