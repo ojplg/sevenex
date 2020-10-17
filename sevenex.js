@@ -66,6 +66,21 @@ SEVENEX.init = function() {
                 name => [ newInterval(name), newRest() ] );
         p.totalTime = p.activities.reduce(
                 (sum,activity) => sum + activity.time, 0 );
+
+        p.nextNonRestActivity = function(index){
+            index++;
+            var nextThing = p.activities[index]
+            while (nextThing){
+                if( nextThing.isRest ){
+                    index++;
+                    nextThing = p.activities[index];
+                } else {
+                    return nextThing;
+                }
+            }
+            return null;
+        }        
+
         return p;
     }
 
@@ -132,16 +147,20 @@ SEVENEX.init = function() {
     	var actDiv = document.createElement('div');
 	    actDiv.id = 'actDiv';
 
-	    var nameSpan = document.createElement('div');
-        nameSpan.id = 'nameSpan';
-        nameSpan.className = 'activity_name';
+	    var nameDiv = document.createElement('div');
+        nameDiv.id = 'nameDiv';
+        nameDiv.className = 'activity_name';
 
-        var counterSpan = document.createElement('div');
-        counterSpan.id = 'counterSpan';
-        counterSpan.className = 'activity_time_left';
+        var counterDiv = document.createElement('div');
+        counterDiv.id = 'counterDiv';
+        counterDiv.className = 'activity_time_left';
 
-	    actDiv.appendChild(nameSpan);
-        actDiv.appendChild(counterSpan);
+        let nextActivityDiv = document.createElement('div');
+        nextActivityDiv.id = 'nextActivityDiv';
+
+	    actDiv.appendChild(nameDiv);
+        actDiv.appendChild(counterDiv);
+        actDiv.appendChild(nextActivityDiv);
 
         var progressButton = document.createElement('button');
         progressButton.id = 'progressButton';
@@ -183,16 +202,24 @@ SEVENEX.init = function() {
             if ( next ) {
     
                 var activity = program.activities[progress.index];
+                var nextActivity = program.nextNonRestActivity(progress.index);
                 progress.index++;
             
-                var actSpan = document.getElementById('nameSpan');
+                var actSpan = document.getElementById('nameDiv');
                 actSpan.innerHTML = activity.name;
                 progress.timeRemainingUntilNext = activity.time;
+
+                var nextActSpan = document.getElementById('nextActivityDiv');
+                if ( nextActivity ){
+                    nextActSpan.innerHTML = 'Next: ' + nextActivity.name;
+                } else {
+                    nextActSpan.innerHTML = '';
+                }
 	        }
 	
 	        var remainingTime = formatTime( progress.timeRemainingUntilNext );
-	        var counterSpan = document.getElementById('counterSpan');
-            counterSpan.innerHTML = "&nbsp;&nbsp;&nbsp;" + remainingTime;
+	        var counterDiv = document.getElementById('counterDiv');
+            counterDiv.innerHTML = remainingTime;
         }
 	    setTimeout(activityDiv, 25);
     }

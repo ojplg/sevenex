@@ -7,21 +7,26 @@ body {
 }
 .activity_name {
 	font-size: 500%;
-    background-color: lightblue;
+    background-color: LightSteelBlue;
 }
 .activity_time_left {
     font-size: 500%;
-    background-color: lightblue;
+    background-color: LightSteelBlue;
 }
 #left_column {
-    background-color: lightgrey;
+    background-color: LightGrey;
 }
 .progress_button {
-    background-color: green;
+    background-color: SeaGreen;
     font-size: 400%;
 }
 #creditDiv {
     position: absolute;
     right: 4px;
     bottom: 4px;
+}
+#nextActivityDiv {
+    font-size: 400%;
+    background-color: DarkCyan;
+    color: DarkSlateGrey;
 }
