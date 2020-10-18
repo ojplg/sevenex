@@ -14,6 +14,7 @@ SEVENEX.init = function() {
         var workoutsLoaded = function(){
             console.log("WORKOUTS LOADED " + this.responseText);
             loadedWorkouts = JSON.parse(this.responseText);
+            loadedWorkouts.unshift(newProgram('Default',activityNames));
             populateWorkoutSelector();
         }
 
@@ -76,8 +77,9 @@ SEVENEX.init = function() {
         };
     }
 
-    var newProgram = function(names){
+    var newProgram = function(name,names){
         var p = {};
+        p.name = name;
         p.activities = names.flatMap(
                 name => [ newInterval(name), newRest() ] );
         p.totalTime = p.activities.reduce(
@@ -140,6 +142,10 @@ SEVENEX.init = function() {
         return p;
     }
 
+    var selectWorkoutCallback = function(evt){
+        console.log('selected ' + evt.target.value);
+    }
+
     var drawScreen = function(){
         console.log("Sevenex initializing");
         var body = document.getElementsByTagName('body');
@@ -154,6 +160,7 @@ SEVENEX.init = function() {
         selectWorkoutSpan.id = 'selectWorkout';
         var selectWorkoutSelector = document.createElement('select');
         selectWorkoutSelector.id = 'selectWorkoutSelector';
+        selectWorkoutSelector.addEventListener('change', selectWorkoutCallback);
         selectWorkoutSpan.appendChild(selectWorkoutSelector);
         topDiv.appendChild(selectWorkoutSpan);
 
@@ -332,7 +339,7 @@ SEVENEX.init = function() {
     var start = function(){
         loadRemoteWorkouts();
 	    drawScreen();
-        program = newProgram(activityNames);
+        program = newProgram("foo",activityNames);
         initStats(program);
         initStages(activityNames);
         progress = newProgress();
