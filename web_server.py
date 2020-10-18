@@ -6,6 +6,7 @@ serverPort = 8080
 
 class MyServer(BaseHTTPRequestHandler):
     def do_GET(self):
+        print("REQUESTED: " +self.path)        
         self.send_response(200)
         self.send_header("Content-type", "application/json")
         self.end_headers()

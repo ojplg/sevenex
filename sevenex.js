@@ -7,6 +7,19 @@ SEVENEX.init = function() {
 	    return millis;
     }	
 
+
+    var loadRemoteWorkouts = function(){
+
+        var workoutsLoaded = function(){
+            console.log("WORKOUTS LOADED " + this.responseText);
+        }
+
+        let requester = new XMLHttpRequest();
+        requester.addEventListener("load", workoutsLoaded);
+        requester.open("GET", "/workouts");
+        requester.send();
+    }
+
     let tick = new Audio('tick.mp3');
     let bark = new Audio('bark.mp3');
 
@@ -296,6 +309,7 @@ SEVENEX.init = function() {
 
 
     var start = function(){
+        loadRemoteWorkouts();
 	    drawScreen();
         program = newProgram(activityNames);
         initStats(program);
