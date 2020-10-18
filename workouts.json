@@ -1,13 +1,537 @@
 [
-    {
-        "name":"Oliver",
-        "activities":    
-            [
-                { "name":"Jumping Jacks", "time":90, "isRest":false }
-                ,{ "name":"Rest", "time":15, "isRest":true }
-                ,{ "name":"Squats", "time":60, "isRest":false }
-                ,{ "name":"Rest", "time":15, "isRest":true }
-                ,{ "name":"Push Ups", "time":30, "isRest":false }
-            ]  
-    }
+  {
+    "name": "Oliver",
+    "activities": [
+      {
+        "name": "Jumping Jacks",
+        "time": 90,
+        "isRest": false
+      },
+      {
+        "name": "Rest",
+        "time": 15,
+        "isRest": true
+      },
+      {
+        "name": "Squats",
+        "time": 60,
+        "isRest": false
+      },
+      {
+        "name": "Rest",
+        "time": 15,
+        "isRest": true
+      },
+      {
+        "name": "Push Ups",
+        "time": 45,
+        "isRest": false
+      }
+    ]
+  },
+  {
+    "name": "Louisa",
+    "activities": [
+      {
+        "name": "Jumping Jacks",
+        "time": 45,
+        "isRest": false
+      },
+      {
+        "name": "Rest",
+        "time": 15,
+        "isRest": true
+      },
+      {
+        "name": "Rainbow kicks",
+        "time": 45,
+        "isRest": false
+      },
+      {
+        "name": "Rest",
+        "time": 15,
+        "isRest": true
+      },
+      {
+        "name": "Plank side hip drop",
+        "time": 45,
+        "isRest": false
+      },
+      {
+        "name": "Rest",
+        "time": 15,
+        "isRest": true
+      },
+      {
+        "name": "Double knees",
+        "time": 45,
+        "isRest": false
+      },
+      {
+        "name": "Rest",
+        "time": 15,
+        "isRest": true
+      },
+      {
+        "name": "Windmills",
+        "time": 45,
+        "isRest": false
+      },
+      {
+        "name": "Rest",
+        "time": 15,
+        "isRest": true
+      },
+      {
+        "name": "Squat and twist",
+        "time": 45,
+        "isRest": false
+      },
+      {
+        "name": "Rest",
+        "time": 15,
+        "isRest": true
+      },
+      {
+        "name": "Inchworms",
+        "time": 45,
+        "isRest": false
+      },
+      {
+        "name": "Rest",
+        "time": 15,
+        "isRest": true
+      },
+      {
+        "name": "Dead lifts",
+        "time": 45,
+        "isRest": false
+      },
+      {
+        "name": "Rest",
+        "time": 15,
+        "isRest": true
+      },
+      {
+        "name": "Kick jacks",
+        "time": 45,
+        "isRest": false
+      },
+      {
+        "name": "Rest",
+        "time": 15,
+        "isRest": true
+      },
+      {
+        "name": "Toy soldier",
+        "time": 45,
+        "isRest": false
+      },
+      {
+        "name": "Rest",
+        "time": 15,
+        "isRest": true
+      },
+      {
+        "name": "Plank",
+        "time": 45,
+        "isRest": false
+      },
+      {
+        "name": "Rest",
+        "time": 15,
+        "isRest": true
+      },
+      {
+        "name": "Ankle reach",
+        "time": 45,
+        "isRest": false
+      },
+      {
+        "name": "Rest",
+        "time": 15,
+        "isRest": true
+      },
+      {
+        "name": "Speedskater",
+        "time": 45,
+        "isRest": false
+      },
+      {
+        "name": "Rest",
+        "time": 15,
+        "isRest": true
+      },
+      {
+        "name": "Chest tap plank",
+        "time": 45,
+        "isRest": false
+      },
+      {
+        "name": "Rest",
+        "time": 15,
+        "isRest": true
+      },
+      {
+        "name": "Side lunge, reach up (L)",
+        "time": 45,
+        "isRest": false
+      },
+      {
+        "name": "Rest",
+        "time": 15,
+        "isRest": true
+      },
+      {
+        "name": "Side lunge, reach up (R)",
+        "time": 45,
+        "isRest": false
+      },
+      {
+        "name": "Rest",
+        "time": 15,
+        "isRest": true
+      },
+      {
+        "name": "W leg lift",
+        "time": 45,
+        "isRest": false
+      },
+      {
+        "name": "Rest",
+        "time": 15,
+        "isRest": true
+      },
+      {
+        "name": "Crabby toe touch",
+        "time": 45,
+        "isRest": false
+      },
+      {
+        "name": "Rest",
+        "time": 15,
+        "isRest": true
+      },
+      {
+        "name": "Lunge back, kick (L)",
+        "time": 45,
+        "isRest": false
+      },
+      {
+        "name": "Rest",
+        "time": 15,
+        "isRest": true
+      },
+      {
+        "name": "Lunge back, kick (R)",
+        "time": 45,
+        "isRest": false
+      },
+      {
+        "name": "Rest",
+        "time": 15,
+        "isRest": true
+      },
+      {
+        "name": "Butt kick jack",
+        "time": 45,
+        "isRest": false
+      },
+      {
+        "name": "Rest",
+        "time": 15,
+        "isRest": true
+      },
+      {
+        "name": "Squat jack",
+        "time": 45,
+        "isRest": false
+      },
+      {
+        "name": "Rest",
+        "time": 15,
+        "isRest": true
+      },
+      {
+        "name": "Froggy reach",
+        "time": 45,
+        "isRest": false
+      },
+      {
+        "name": "Rest",
+        "time": 15,
+        "isRest": true
+      },
+      {
+        "name": "T planks",
+        "time": 45,
+        "isRest": false
+      },
+      {
+        "name": "Rest",
+        "time": 15,
+        "isRest": true
+      },
+      {
+        "name": "Squat punch",
+        "time": 45,
+        "isRest": false
+      },
+      {
+        "name": "Rest",
+        "time": 15,
+        "isRest": true
+      },
+      {
+        "name": "Star jack",
+        "time": 45,
+        "isRest": false
+      },
+      {
+        "name": "Rest",
+        "time": 15,
+        "isRest": true
+      },
+      {
+        "name": "Knee drives",
+        "time": 45,
+        "isRest": false
+      },
+      {
+        "name": "Rest",
+        "time": 15,
+        "isRest": true
+      },
+      {
+        "name": "Mountain climber",
+        "time": 45,
+        "isRest": false
+      },
+      {
+        "name": "Rest",
+        "time": 15,
+        "isRest": true
+      },
+      {
+        "name": "Touch downs",
+        "time": 45,
+        "isRest": false
+      },
+      {
+        "name": "Rest",
+        "time": 15,
+        "isRest": true
+      },
+      {
+        "name": "Standing burpees",
+        "time": 45,
+        "isRest": false
+      },
+      {
+        "name": "Rest",
+        "time": 15,
+        "isRest": true
+      },
+      {
+        "name": "Front kick skip",
+        "time": 45,
+        "isRest": false
+      },
+      {
+        "name": "Rest",
+        "time": 15,
+        "isRest": true
+      },
+      {
+        "name": "Reach low, kick high (R)",
+        "time": 45,
+        "isRest": false
+      },
+      {
+        "name": "Rest",
+        "time": 15,
+        "isRest": true
+      },
+      {
+        "name": "Reach low, kick high (L)",
+        "time": 45,
+        "isRest": false
+      },
+      {
+        "name": "Rest",
+        "time": 15,
+        "isRest": true
+      },
+      {
+        "name": "High knees",
+        "time": 45,
+        "isRest": false
+      },
+      {
+        "name": "Rest",
+        "time": 15,
+        "isRest": true
+      },
+      {
+        "name": "Mermaid crunch",
+        "time": 45,
+        "isRest": false
+      },
+      {
+        "name": "Rest",
+        "time": 15,
+        "isRest": true
+      },
+      {
+        "name": "Crab kicks",
+        "time": 45,
+        "isRest": false
+      },
+      {
+        "name": "Rest",
+        "time": 15,
+        "isRest": true
+      },
+      {
+        "name": "Side shuffles",
+        "time": 45,
+        "isRest": false
+      },
+      {
+        "name": "Rest",
+        "time": 15,
+        "isRest": true
+      },
+      {
+        "name": "Rainbow knee to elbows",
+        "time": 45,
+        "isRest": false
+      },
+      {
+        "name": "Rest",
+        "time": 15,
+        "isRest": true
+      },
+      {
+        "name": "In and out squats",
+        "time": 45,
+        "isRest": false
+      },
+      {
+        "name": "Rest",
+        "time": 15,
+        "isRest": true
+      },
+      {
+        "name": "Drinky birds (L)",
+        "time": 45,
+        "isRest": false
+      },
+      {
+        "name": "Rest",
+        "time": 15,
+        "isRest": true
+      },
+      {
+        "name": "Drinky birds (R)",
+        "time": 45,
+        "isRest": false
+      },
+      {
+        "name": "Rest",
+        "time": 15,
+        "isRest": true
+      },
+      {
+        "name": "Toe reach crunches",
+        "time": 45,
+        "isRest": false
+      },
+      {
+        "name": "Rest",
+        "time": 15,
+        "isRest": true
+      },
+      {
+        "name": "Punch and kick",
+        "time": 45,
+        "isRest": false
+      },
+      {
+        "name": "Rest",
+        "time": 15,
+        "isRest": true
+      },
+      {
+        "name": "Leg twist jacks",
+        "time": 45,
+        "isRest": false
+      },
+      {
+        "name": "Rest",
+        "time": 15,
+        "isRest": true
+      },
+      {
+        "name": "Wall sit",
+        "time": 45,
+        "isRest": false
+      },
+      {
+        "name": "Rest",
+        "time": 15,
+        "isRest": true
+      },
+      {
+        "name": "Deep squat wave",
+        "time": 45,
+        "isRest": false
+      },
+      {
+        "name": "Rest",
+        "time": 15,
+        "isRest": true
+      },
+      {
+        "name": "Alley Oops",
+        "time": 45,
+        "isRest": false
+      },
+      {
+        "name": "Rest",
+        "time": 15,
+        "isRest": true
+      },
+      {
+        "name": "Side reaches up, across, down",
+        "time": 45,
+        "isRest": false
+      },
+      {
+        "name": "Rest",
+        "time": 15,
+        "isRest": true
+      },
+      {
+        "name": "Roundhouse jacks",
+        "time": 45,
+        "isRest": false
+      },
+      {
+        "name": "Rest",
+        "time": 15,
+        "isRest": true
+      },
+      {
+        "name": "K jacks",
+        "time": 45,
+        "isRest": false
+      },
+      {
+        "name": "Rest",
+        "time": 15,
+        "isRest": true
+      }
+    ]
+  }
 ]
