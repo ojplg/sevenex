@@ -2,6 +2,11 @@ window.SEVENEX = {}
 
 SEVENEX.init = function() {
     
+    var that = {};
+
+    let tick = new Audio('tick.mp3');
+    let bark = new Audio('bark.mp3');
+
     var nowTimeMillis = function(){
         var millis = Date.now();
 	    return millis;
@@ -13,8 +18,9 @@ SEVENEX.init = function() {
 
         var workoutsLoaded = function(){
             console.log("WORKOUTS LOADED " + this.responseText);
-            loadedWorkouts = JSON.parse(this.responseText);
-            loadedWorkouts.unshift(newProgram('Default',activityNames));
+            workoutsList = JSON.parse(this.responseText);
+            loadedWorkouts = workoutsList.map(workoutToProgram);
+            loadedWorkouts.unshift(defaultProgram);
             populateWorkoutSelector();
         }
 
@@ -23,9 +29,6 @@ SEVENEX.init = function() {
         requester.open("GET", "/workouts");
         requester.send();
     }
-
-    let tick = new Audio('tick.mp3');
-    let bark = new Audio('bark.mp3');
 
     var formatTime = function(millis){
         let totalSeconds = Math.round(millis/1000);
@@ -36,11 +39,6 @@ SEVENEX.init = function() {
 
         return minutes + ":" + secondsF;
     }
-
-    var that = {};
-
-    var restTimeSpan = 10 * 1000;
-    var activityTimeSpan = 30 * 1000;
 
     var defaultWorkout = {
         "name":"Default",
@@ -75,48 +73,23 @@ SEVENEX.init = function() {
        ]
     };
 
-    var activityNames = [
-    	"Jumping Jacks"
-	    ,"Wall Sit"
-	    ,"Push-ups"
-	    ,"Abdominal Crunches"
-	    ,"Step-up onto a Chair"
-	    ,"Squats"
-	    ,"Triceps Dip on a Chair"
-	    ,"Plank"
-	    ,"High Knees, Run in Place"
-	    ,"Alternating Lunges"
-	    ,"Push-ups with Rotation"
-	    ,"Side Plank, Left"
-	    ,"Side Plank, Right"
-    ];
 
     var program;
     var progress;
 
-    var newInterval = function(name){
-        return {
-            name: name,
-            time: activityTimeSpan,
-            isRest: false
-        };
-    }	
+    var workoutToProgram = function(p){
+        
+        p.activities.forEach( act => act.time *= 1000 );
 
-    var newRest = function(){
-        return {
-            name: "Rest",
-            time: restTimeSpan,
-            isRest: true
-        };
-    }
-
-    var newProgram = function(name,names){
-        var p = {};
-        p.name = name;
-        p.activities = names.flatMap(
-                name => [ newInterval(name), newRest() ] );
         p.totalTime = p.activities.reduce(
                 (sum,activity) => sum + activity.time, 0 );
+
+        p.activityNames = p.activities.reduce(
+            (accum,activity) => {
+                if(!activity.isRest)
+                    accum.push(activity.name);
+                    return accum;
+                } , []);
 
         p.nextNonRestActivity = function(index){
             index++;
@@ -134,6 +107,8 @@ SEVENEX.init = function() {
 
         return p;
     }
+
+    let defaultProgram = workoutToProgram(defaultWorkout);
 
     var newProgress = function(){
         var p = {};
@@ -372,9 +347,9 @@ SEVENEX.init = function() {
     var start = function(){
         loadRemoteWorkouts();
 	    drawScreen();
-        program = newProgram("foo",activityNames);
+        program = defaultProgram;
         initStats(program);
-        initStages(activityNames);
+        initStages(program.activityNames);
         progress = newProgress();
         var progressButton = document.getElementById('progressButton');
         progressButton.onclick = function(){ progress.toggle();  }
