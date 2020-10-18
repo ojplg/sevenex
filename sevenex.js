@@ -7,11 +7,14 @@ SEVENEX.init = function() {
 	    return millis;
     }	
 
+    var loadedWorkouts;
 
     var loadRemoteWorkouts = function(){
 
         var workoutsLoaded = function(){
             console.log("WORKOUTS LOADED " + this.responseText);
+            loadedWorkouts = JSON.parse(this.responseText);
+            populateWorkoutSelector();
         }
 
         let requester = new XMLHttpRequest();
@@ -313,6 +316,17 @@ SEVENEX.init = function() {
             index++;
             stagesDiv.appendChild(actDiv);
         });   
+    }
+
+    var populateWorkoutSelector = function(){
+        var selector = document.getElementById('selectWorkoutSelector');
+
+        loadedWorkouts.forEach( function(workout){
+            var option = document.createElement('option');
+            option.value = workout.name;
+            option.innerHTML = workout.name;
+            selector.appendChild(option);
+        });
     }
 
     var start = function(){
