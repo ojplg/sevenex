@@ -73,7 +73,6 @@ SEVENEX.init = function() {
        ]
     };
 
-
     var program;
     var progress;
 
@@ -152,6 +151,9 @@ SEVENEX.init = function() {
 
     var selectWorkoutCallback = function(evt){
         console.log('selected ' + evt.target.value);
+        var selectedProgram = loadedWorkouts.find( program =>
+            program.name == evt.target.value);
+        setActiveProgram(selectedProgram);
     }
 
     var drawScreen = function(){
@@ -287,7 +289,7 @@ SEVENEX.init = function() {
 	    setTimeout(activityDiv, 25);
     }
 
-    var newStatDiv = function(baseId, labelName, value){
+    var newStatDiv = function(baseId, labelName ){
         let newDiv = document.createElement('div');
         newDiv.id = baseId + 'Div';
         let labelSpan = document.createElement('span');
@@ -297,29 +299,43 @@ SEVENEX.init = function() {
         let valueSpan = document.createElement('span');
         valueSpan.id = baseId + "ValueSpan";
         valueSpan.className = 'left_column_value'
-        valueSpan.innerHTML = value;
         newDiv.appendChild(valueSpan);
     
         return newDiv;
     }
 
-    var initStats = function(program){
+    var setStatValue = function(baseId, value){
+        var valueSpan = document.getElementById(baseId + "ValueSpan");
+        valueSpan.innerHTML = value;
+    }
+
+    var initStats = function(){
+
         let statsDiv = document.getElementById('programStatsDiv');
         
-        let totalTimeDiv = newStatDiv("totalTime", "Total Time",
-            formatTime(program.totalTime));
+        let totalTimeDiv = newStatDiv("totalTime", "Total Time");
         statsDiv.appendChild(totalTimeDiv);
 
-        let elapsedTimeDiv = newStatDiv("elapsedTime", "Elapsed Time",
-            formatTime(0));
+        let elapsedTimeDiv = newStatDiv("elapsedTime", "Elapsed Time");
         statsDiv.appendChild(elapsedTimeDiv);
 
-        let remainingTimeDiv = newStatDiv("totalRemainingTime", "Remaining Time",
-            formatTime(program.totalTime));
+        let remainingTimeDiv = newStatDiv("totalRemainingTime", "Remaining Time");
         statsDiv.appendChild(remainingTimeDiv);
 
-        let percentCompleteDiv = newStatDiv("percentComplete", "Percent Complete", "0");
+        let percentCompleteDiv = newStatDiv("percentComplete", "Percent Complete");
         statsDiv.appendChild(percentCompleteDiv);
+    }
+
+    var renderInitialStatValues = function(program){
+        setStatValue("totalTime", formatTime(program.totalTime));
+        setStatValue("elapsedTime", formatTime(0));
+        setStatValue("totalRemainingTime", formatTime(program.totalTime));
+        setStatValue("percentComplete", "0");
+    }
+
+    var clearStages = function(){
+        var stagesDiv = document.getElementById('stagesDiv');
+        stagesDiv.innerHTML = '';
     }
 
     var initStages = function(activityNames){
@@ -344,16 +360,22 @@ SEVENEX.init = function() {
         });
     }
 
+    var setActiveProgram = function(selectedProgram){
+        program = selectedProgram;
+        clearStages();
+        initStages(program.activityNames);
+        renderInitialStatValues(program);
+        progress = newProgress();
+	    activityDiv();
+    }
+
     var start = function(){
         loadRemoteWorkouts();
 	    drawScreen();
-        program = defaultProgram;
-        initStats(program);
-        initStages(program.activityNames);
-        progress = newProgress();
+        initStats();
         var progressButton = document.getElementById('progressButton');
         progressButton.onclick = function(){ progress.toggle();  }
-	    activityDiv();
+        setActiveProgram(defaultProgram);
     }
 
     that.start = start;
