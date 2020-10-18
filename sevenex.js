@@ -13,32 +13,8 @@ SEVENEX.init = function() {
     }	
 
     var loadedWorkouts;
-
-    var loadRemoteWorkouts = function(){
-
-        var workoutsLoaded = function(){
-            console.log("WORKOUTS LOADED " + this.responseText);
-            workoutsList = JSON.parse(this.responseText);
-            loadedWorkouts = workoutsList.map(workoutToProgram);
-            loadedWorkouts.unshift(defaultProgram);
-            populateWorkoutSelector();
-        }
-
-        let requester = new XMLHttpRequest();
-        requester.addEventListener("load", workoutsLoaded);
-        requester.open("GET", "/sevenex/workouts/");
-        requester.send();
-    }
-
-    var formatTime = function(millis){
-        let totalSeconds = Math.round(millis/1000);
-        let minutes = totalSeconds > 60 ?
-                Math.round(totalSeconds/60) : 0;
-        let seconds = totalSeconds%60;
-        let secondsF = seconds >= 10 ? seconds : "0" + seconds;
-
-        return minutes + ":" + secondsF;
-    }
+    var program;
+    var progress;
 
     var defaultWorkout = {
         "name":"Default",
@@ -72,9 +48,32 @@ SEVENEX.init = function() {
                 ,{"name":"Rest","time":10,"isRest":true}
        ]
     };
+   
+    var loadRemoteWorkouts = function(){
 
-    var program;
-    var progress;
+        var workoutsLoaded = function(){
+            console.log("WORKOUTS LOADED " + this.responseText);
+            workoutsList = JSON.parse(this.responseText);
+            loadedWorkouts = workoutsList.map(workoutToProgram);
+            loadedWorkouts.unshift(defaultProgram);
+            populateWorkoutSelector();
+        }
+
+        let requester = new XMLHttpRequest();
+        requester.addEventListener("load", workoutsLoaded);
+        requester.open("GET", "/sevenex/workouts/");
+        requester.send();
+    }
+
+    var formatTime = function(millis){
+        let totalSeconds = Math.round(millis/1000);
+        let minutes = totalSeconds > 60 ?
+                Math.floor(totalSeconds/60) : 0;
+        let seconds = totalSeconds%60;
+        let secondsF = seconds >= 10 ? seconds : "0" + seconds;
+
+        return minutes + ":" + secondsF;
+    }
 
     var workoutToProgram = function(p){
         
@@ -133,7 +132,7 @@ SEVENEX.init = function() {
             let oldRemainingSeconds = Math.round(p.timeRemainingUntilNext/1000);
             p.timeRemainingUntilNext -= timeElapsed;         
             let newRemainingSeconds = Math.round(p.timeRemainingUntilNext/1000);
-            if( newRemainingSeconds > 0 &&
+            if( newRemainingSeconds >= 0 &&
                 newRemainingSeconds < 5 &&
                 newRemainingSeconds != oldRemainingSeconds ){
                 tick.play();
@@ -273,8 +272,8 @@ SEVENEX.init = function() {
             var elapsedTimeValueSpan = document.getElementById('elapsedTimeValueSpan');
             elapsedTimeValueSpan.innerHTML = elapsedTime;
 
-            var totalRemainingTime = formatTime (
-                program.totalTime - progress.totalTimeElapsed );
+            var totalRemainingMillis = program.totalTime - progress.totalTimeElapsed;
+            var totalRemainingTime = formatTime ( totalRemainingMillis );
             var totalRemainingValueSpan = document.getElementById(
                 'totalRemainingTimeValueSpan');
             totalRemainingValueSpan.innerHTML = totalRemainingTime;

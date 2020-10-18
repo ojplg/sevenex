@@ -11,3 +11,4 @@ Timer for [NYTimes Seven Minute Workout](https://www.nytimes.com/guides/well/act
  * Allow randomization of activities
  * Clear activity pane on workout reload
  * Total time bug with Louisa workout
+ * Make default work without server try/catch?
