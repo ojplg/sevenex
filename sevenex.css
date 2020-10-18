@@ -33,3 +33,6 @@ body {
 span.left_column_value {
     float: right;
 }
+#selectWorkout {
+    float: right;
+}

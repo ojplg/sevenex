@@ -142,7 +142,17 @@ SEVENEX.init = function() {
         var body = document.getElementsByTagName('body');
 
         var topDiv = document.createElement('div');
-        topDiv.innerHTML = "<b>Sevenex.</b> An application for quick interval workouts.";
+        var topTitleSpan = document.createElement('span');
+        topTitleSpan.id = 'topTitle';
+        topTitleSpan.innerHTML = 
+            "<b>Sevenex.</b> An application for quick interval workouts.";
+        topDiv.appendChild(topTitleSpan);
+        var selectWorkoutSpan = document.createElement('span');
+        selectWorkoutSpan.id = 'selectWorkout';
+        var selectWorkoutSelector = document.createElement('select');
+        selectWorkoutSelector.id = 'selectWorkoutSelector';
+        selectWorkoutSpan.appendChild(selectWorkoutSelector);
+        topDiv.appendChild(selectWorkoutSpan);
 
         var gridDiv = document.createElement('div');
         gridDiv.className = 'grid';
@@ -209,7 +219,6 @@ SEVENEX.init = function() {
         document.body.appendChild(document.createElement('hr'));
     	document.body.appendChild(gridDiv);
         document.body.appendChild(creditDiv);
-
     }
 
     var activityDiv = function(){
@@ -260,7 +269,6 @@ SEVENEX.init = function() {
 	    setTimeout(activityDiv, 25);
     }
 
-
     var newStatDiv = function(baseId, labelName, value){
         let newDiv = document.createElement('div');
         newDiv.id = baseId + 'Div';
@@ -306,7 +314,6 @@ SEVENEX.init = function() {
             stagesDiv.appendChild(actDiv);
         });   
     }
-
 
     var start = function(){
         loadRemoteWorkouts();
