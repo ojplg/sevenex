@@ -26,7 +26,7 @@ SEVENEX.init = function() {
 
         let requester = new XMLHttpRequest();
         requester.addEventListener("load", workoutsLoaded);
-        requester.open("GET", "/workouts");
+        requester.open("GET", "/sevenex/workouts/");
         requester.send();
     }
 
