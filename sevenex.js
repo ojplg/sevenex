@@ -52,9 +52,9 @@ SEVENEX.init = function() {
     var loadRemoteWorkouts = function(){
 
         var workoutsLoaded = function(){
-            console.log("WORKOUTS LOADED " + this.responseText);
+            console.log("WORKOUTS LOADED");
             workoutsList = JSON.parse(this.responseText);
-            loadedWorkouts = workoutsList.map(workoutToProgram);
+            loadedWorkouts = workoutsList.map( a => workoutToProgram(a, 1000));
             loadedWorkouts.unshift(defaultProgram);
             populateWorkoutSelector();
         }
@@ -75,9 +75,9 @@ SEVENEX.init = function() {
         return minutes + ":" + secondsF;
     }
 
-    var workoutToProgram = function(p){
+    var workoutToProgram = function(p, scale){
         
-        p.activities.forEach( act => act.time *= 1000 );
+        p.activities.forEach( act => act.time *= scale );
 
         p.totalTime = p.activities.reduce(
                 (sum,activity) => sum + activity.time, 0 );
@@ -106,7 +106,7 @@ SEVENEX.init = function() {
         return p;
     }
 
-    let defaultProgram = workoutToProgram(defaultWorkout);
+    let defaultProgram = workoutToProgram(defaultWorkout, 1000);
 
     var newProgress = function(){
         var p = {};
@@ -182,10 +182,15 @@ SEVENEX.init = function() {
         let programStatsDiv = document.createElement('div');
         programStatsDiv.id = 'programStatsDiv';
 
+        let configDiv = document.createElement('div');
+        configDiv.id = 'configDiv';
+
         var stagesDiv = document.createElement('div');
         stagesDiv.id = 'stagesDiv';
         
         leftColumnDiv.appendChild(programStatsDiv);
+        leftColumnDiv.appendChild(document.createElement('hr'));
+        leftColumnDiv.appendChild(configDiv);
         leftColumnDiv.appendChild(document.createElement('hr'));
         leftColumnDiv.appendChild(stagesDiv);
 
@@ -218,7 +223,7 @@ SEVENEX.init = function() {
         progressButton.type = 'button';
         progressButton.className = 'progress_button';
 
-        var controlDiv = document.createElement('div');
+        let controlDiv = document.createElement('div');
         controlDiv.id = 'controlDiv';
         controlDiv.appendChild(progressButton);
 
@@ -359,11 +364,68 @@ SEVENEX.init = function() {
         });
     }
 
+    var initControls = function(){
+        var randomizeButton = document.createElement('button');
+        randomizeButton.innerHTML = "Randomize";
+        randomizeButton.onclick = randomizeActivities;
+        
+        var configDiv = document.getElementById('configDiv');
+        configDiv.appendChild(randomizeButton);
+    }
+
+    var shuffle = function(array) {
+        var currentIndex = array.length, temporaryValue, randomIndex;
+
+        // While there remain elements to shuffle...
+        while (0 !== currentIndex) {
+
+            // Pick a remaining element...
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex -= 1;
+
+            // And swap it with the current element.
+            temporaryValue = array[currentIndex];
+            array[currentIndex] = array[randomIndex];
+            array[randomIndex] = temporaryValue;
+        }
+
+        return array;
+    }
+
+    var randomizeActivities = function(){
+        console.log("randomizing");
+
+        let filtered = program.activities.filter(
+            activity => ! activity.isRest);
+
+        let randomized = shuffle(filtered);
+        var index = 0;
+
+        let activities = program.activities.map(
+            act => {
+                if ( act.isRest ){
+                    return act;
+                } else {
+                    var next =  randomized[index];
+                    index++;
+                    return next;
+                }
+            });
+        
+        var randomOrderWorkout = {};
+        randomOrderWorkout.name = program.name;
+        randomOrderWorkout.activities = activities;
+
+        var randomOrderProgram = workoutToProgram( randomOrderWorkout, 1 );
+        setActiveProgram(randomOrderProgram);
+    }
+
     var setActiveProgram = function(selectedProgram){
         program = selectedProgram;
+        renderInitialStatValues(program);
+        initControls();
         clearStages();
         initStages(program.activityNames);
-        renderInitialStatValues(program);
         progress = newProgress();
 	    activityDiv();
     }
