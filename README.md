@@ -10,3 +10,4 @@ Timer for [NYTimes Seven Minute Workout](https://www.nytimes.com/guides/well/act
  * Indicate complete/active/upcoming in side panel
  * Allow randomization of activities
  * Clear activity pane on workout reload
+ * Total time bug with Louisa workout
