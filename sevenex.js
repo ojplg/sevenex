@@ -42,6 +42,39 @@ SEVENEX.init = function() {
     var restTimeSpan = 10 * 1000;
     var activityTimeSpan = 30 * 1000;
 
+    var defaultWorkout = {
+        "name":"Default",
+        "activities":
+        [
+                {"name":"Jumping Jacks","time":30,"isRest":false}
+                ,{"name":"Rest","time":10,"isRest":true}
+                ,{"name":"Wall Sit","time":30,"isRest":false}
+                ,{"name":"Rest","time":10,"isRest":true}
+                ,{"name":"Push-ups","time":30,"isRest":false}
+                ,{"name":"Rest","time":10,"isRest":true}
+                ,{"name":"Abdominal Crunches","time":30,"isRest":false}
+                ,{"name":"Rest","time":10,"isRest":true}
+                ,{"name":"Step-up onto a Chair","time":30,"isRest":false}
+                ,{"name":"Rest","time":10,"isRest":true}
+                ,{"name":"Squats","time":30,"isRest":false}
+                ,{"name":"Rest","time":10,"isRest":true}
+                ,{"name":"Triceps Dip on a Chair","time":30,"isRest":false}
+                ,{"name":"Rest","time":10,"isRest":true}
+                ,{"name":"Plank","time":30,"isRest":false}
+                ,{"name":"Rest","time":10,"isRest":true}
+                ,{"name":"High Knees, Run in Place","time":30,"isRest":false}
+                ,{"name":"Rest","time":10,"isRest":true}
+                ,{"name":"Alternating Lunges","time":30,"isRest":false}
+                ,{"name":"Rest","time":10,"isRest":true}
+                ,{"name":"Push-ups with Rotation","time":30,"isRest":false}
+                ,{"name":"Rest","time":10,"isRest":true}
+                ,{"name":"Side Plank, Left","time":30,"isRest":false}
+                ,{"name":"Rest","time":10,"isRest":true}
+                ,{"name":"Side Plank, Right","time":30,"isRest":false}
+                ,{"name":"Rest","time":10,"isRest":true}
+       ]
+    };
+
     var activityNames = [
     	"Jumping Jacks"
 	    ,"Wall Sit"
