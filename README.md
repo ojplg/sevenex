@@ -10,5 +10,4 @@ Timer for [NYTimes Seven Minute Workout](https://www.nytimes.com/guides/well/act
  * Indicate complete/active/upcoming in side panel
  * Clean up excess randomize buttons
  * Clear activity pane on workout reload
- * Total time bug with Louisa workout
  * Make default work without server try/catch?
