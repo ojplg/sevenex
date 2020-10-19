@@ -9,8 +9,8 @@ SEVENEX.init = function() {
 
     var nowTimeMillis = function(){
         var millis = Date.now();
-	    return millis;
-    }	
+        return millis;
+    }    
 
     var loadedWorkouts;
     var program;
@@ -194,10 +194,10 @@ SEVENEX.init = function() {
         leftColumnDiv.appendChild(document.createElement('hr'));
         leftColumnDiv.appendChild(stagesDiv);
 
-    	var actDiv = document.createElement('div');
-	    actDiv.id = 'actDiv';
+        var actDiv = document.createElement('div');
+        actDiv.id = 'actDiv';
 
-	    var nameDiv = document.createElement('div');
+        var nameDiv = document.createElement('div');
         nameDiv.id = 'nameDiv';
         nameDiv.className = 'activity_name';
         nameDiv.innerHTML = '&nbsp;';
@@ -211,7 +211,7 @@ SEVENEX.init = function() {
         nextActivityDiv.id = 'nextActivityDiv';
         nextActivityDiv.innerHTML = '&nbsp;';
 
-	    actDiv.appendChild(nameDiv);
+        actDiv.appendChild(nameDiv);
         actDiv.appendChild(counterDiv);
         actDiv.appendChild(nextActivityDiv);
 
@@ -241,7 +241,7 @@ SEVENEX.init = function() {
         document.body.appendChild(document.createElement('hr'));
         document.body.appendChild(topDiv);
         document.body.appendChild(document.createElement('hr'));
-    	document.body.appendChild(gridDiv);
+        document.body.appendChild(gridDiv);
         document.body.appendChild(creditDiv);
     }
 
@@ -267,10 +267,10 @@ SEVENEX.init = function() {
                 } else {
                     nextActSpan.innerHTML = '';
                 }
-	        }
-	
-	        var remainingTime = formatTime( progress.timeRemainingUntilNext );
-	        var counterDiv = document.getElementById('counterDiv');
+            }
+    
+            var remainingTime = formatTime( progress.timeRemainingUntilNext );
+            var counterDiv = document.getElementById('counterDiv');
             counterDiv.innerHTML = remainingTime;
 
             var elapsedTime = formatTime ( progress.totalTimeElapsed );
@@ -290,7 +290,7 @@ SEVENEX.init = function() {
             percentCompleteValueSpan.innerHTML = percentComplete;
         }
 
-	    setTimeout(activityDiv, 25);
+        setTimeout(activityDiv, 25);
     }
 
     var newStatDiv = function(baseId, labelName ){
@@ -427,12 +427,12 @@ SEVENEX.init = function() {
         clearStages();
         initStages(program.activityNames);
         progress = newProgress();
-	    activityDiv();
+        activityDiv();
     }
 
     var start = function(){
         loadRemoteWorkouts();
-	    drawScreen();
+        drawScreen();
         initStats();
         var progressButton = document.getElementById('progressButton');
         progressButton.onclick = function(){ progress.toggle();  }
