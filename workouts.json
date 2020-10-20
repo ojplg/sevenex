@@ -33,6 +33,11 @@
     "name": "Louisa",
     "activities": [
       {
+        "name": "Rest",
+        "time": 15,
+        "isRest": true
+      },
+      {
         "name": "Jumping Jacks",
         "time": 45,
         "isRest": false
@@ -526,11 +531,6 @@
         "name": "K jacks",
         "time": 45,
         "isRest": false
-      },
-      {
-        "name": "Rest",
-        "time": 15,
-        "isRest": true
       }
     ]
   }

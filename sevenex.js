@@ -45,7 +45,6 @@ SEVENEX.init = function() {
                 ,{"name":"Side Plank, Left","time":30,"isRest":false}
                 ,{"name":"Rest","time":10,"isRest":true}
                 ,{"name":"Side Plank, Right","time":30,"isRest":false}
-                ,{"name":"Rest","time":10,"isRest":true}
        ]
     };
    
