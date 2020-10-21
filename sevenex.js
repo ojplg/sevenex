@@ -108,44 +108,41 @@ SEVENEX.init = function() {
 
     let defaultProgram = workoutToProgram(defaultWorkout, 1000);
 
-    var newProgress = function(){
-        var p = {};
-        p.index = 0;
-        p.timeRemainingUntilNext = -1;
-        p.lastMeasuredTime = nowTimeMillis();
-        p.running = false;
-        p.totalTimeElapsed = 0;
+    function Progress(){
+        this.index = 0;
+        this.timeRemainingUntilNext = -1;
+        this.lastMeasuredTime = nowTimeMillis();
+        this.running = false;
+        this.totalTimeElapsed = 0;
 
-        p.toggle = function() {
-            p.running = ! p.running;
+        this.toggle = function() {
+            this.running = ! this.running;
 
             var progressButton = document.getElementById('progressButton');
-            progressButton.innerHTML = p.running ? "Pause" : "Resume";
-            p.lastMeasuredTime = nowTimeMillis();
+            progressButton.innerHTML = this.running ? "Pause" : "Resume";
+            this.lastMeasuredTime = nowTimeMillis();
         }
 
-        p.advanceTime = function(){
+        this.advanceTime = function(){
             let now = nowTimeMillis(); 
-            let timeElapsed = now - p.lastMeasuredTime;
-            p.totalTimeElapsed += timeElapsed;
-            p.lastMeasuredTime = now;
-            let oldRemainingSeconds = Math.round(p.timeRemainingUntilNext/1000);
-            p.timeRemainingUntilNext -= timeElapsed;         
-            let newRemainingSeconds = Math.round(p.timeRemainingUntilNext/1000);
+            let timeElapsed = now - this.lastMeasuredTime;
+            this.totalTimeElapsed += timeElapsed;
+            this.lastMeasuredTime = now;
+            let oldRemainingSeconds = Math.round(this.timeRemainingUntilNext/1000);
+            this.timeRemainingUntilNext -= timeElapsed;         
+            let newRemainingSeconds = Math.round(this.timeRemainingUntilNext/1000);
             if( newRemainingSeconds >= 0 &&
                 newRemainingSeconds < 5 &&
                 newRemainingSeconds != oldRemainingSeconds ){
                 tick.play();
             }
 
-            let next = p.timeRemainingUntilNext < 0;
+            let next = this.timeRemainingUntilNext < 0;
             if (next) {
                 bark.play();
             }
             return next;
         }
-
-        return p;
     }
 
     var selectWorkoutCallback = function(evt){
@@ -420,17 +417,22 @@ SEVENEX.init = function() {
         setActiveProgram(randomOrderProgram);
     }
 
+    function foo(s){
+        console.log("tada " +s);
+    }
+
     var setActiveProgram = function(selectedProgram){
         program = selectedProgram;
         renderInitialStatValues(program);
         initControls();
         clearStages();
         initStages(program.activityNames);
-        progress = newProgress();
+        progress = new Progress();
         activityDiv();
     }
 
     var start = function(){
+        foo("bully");
         loadRemoteWorkouts();
         drawScreen();
         initStats();
