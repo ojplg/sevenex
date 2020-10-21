@@ -20,7 +20,8 @@ SEVENEX.init = function() {
         "name":"Default",
         "activities":
         [
-                {"name":"Jumping Jacks","time":30,"isRest":false}
+                {"name":"Rest","time":10,"isRest":true}
+                ,{"name":"Jumping Jacks","time":30,"isRest":false}
                 ,{"name":"Rest","time":10,"isRest":true}
                 ,{"name":"Wall Sit","time":30,"isRest":false}
                 ,{"name":"Rest","time":10,"isRest":true}
