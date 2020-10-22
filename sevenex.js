@@ -16,6 +16,8 @@ SEVENEX.init = function() {
     var program;
     var progress;
 
+    var timerScreen;
+
     var defaultWorkout = {
         "name":"Default",
         "activities":
@@ -152,26 +154,8 @@ SEVENEX.init = function() {
         setActiveProgram(selectedProgram);
     }
 
-    var drawScreen = function(){
-        console.log("Sevenex initializing");
-        var body = document.getElementsByTagName('body');
 
-        var topDiv = document.createElement('div');
-        var topTitleSpan = document.createElement('span');
-        topTitleSpan.id = 'topTitle';
-        topTitleSpan.innerHTML = 
-            "<b>Sevenex.</b> An application for quick interval workouts.";
-        topDiv.appendChild(topTitleSpan);
-        var selectWorkoutSpan = document.createElement('span');
-        selectWorkoutSpan.id = 'selectWorkout';
-        var selectWorkoutSelector = document.createElement('select');
-        selectWorkoutSelector.id = 'selectWorkoutSelector';
-        selectWorkoutSelector.addEventListener('change', selectWorkoutCallback);
-        selectWorkoutSpan.appendChild(selectWorkoutSelector);
-        topDiv.appendChild(selectWorkoutSpan);
-
-        var gridDiv = document.createElement('div');
-        gridDiv.className = 'grid';
+    function TimerScreen(){
 
         var leftColumnDiv = document.createElement('div');
         leftColumnDiv.id = 'left_column';
@@ -194,23 +178,23 @@ SEVENEX.init = function() {
         var actDiv = document.createElement('div');
         actDiv.id = 'actDiv';
 
-        var nameDiv = document.createElement('div');
-        nameDiv.id = 'nameDiv';
-        nameDiv.className = 'activity_name';
-        nameDiv.innerHTML = '&nbsp;';
+        this.nameDiv = document.createElement('div');
+        this.nameDiv.id = 'nameDiv';
+        this.nameDiv.className = 'activity_name';
+        this.nameDiv.innerHTML = '&nbsp;';
     
         var counterDiv = document.createElement('div');
         counterDiv.id = 'counterDiv';
         counterDiv.className = 'activity_time_left';
         counterDiv.innerHTML = '&nbsp;';
 
-        let nextActivityDiv = document.createElement('div');
-        nextActivityDiv.id = 'nextActivityDiv';
-        nextActivityDiv.innerHTML = '&nbsp;';
+        this.nextActivityDiv = document.createElement('div');
+        this.nextActivityDiv.id = 'nextActivityDiv';
+        this.nextActivityDiv.innerHTML = '&nbsp;';
 
-        actDiv.appendChild(nameDiv);
+        actDiv.appendChild(this.nameDiv);
         actDiv.appendChild(counterDiv);
-        actDiv.appendChild(nextActivityDiv);
+        actDiv.appendChild(this.nextActivityDiv);
 
         var progressButton = document.createElement('button');
         progressButton.id = 'progressButton';
@@ -226,14 +210,43 @@ SEVENEX.init = function() {
 
         actDiv.appendChild(controlDiv);
 
-        gridDiv.appendChild(leftColumnDiv);
-        gridDiv.appendChild(actDiv);
+        this.gridDiv = document.createElement('div');
+        this.gridDiv.className = 'grid';
+        this.gridDiv.appendChild(leftColumnDiv);
+        this.gridDiv.appendChild(actDiv);
+
+        this.setActivityNames = function(currentActivity, nextActivity){
+            this.nameDiv.innerHTML = currentActivity;
+            this.nextActivityDiv.innerHTML = nextActivity;
+        };
+    }
+
+    var drawScreen = function(){
+        console.log("Sevenex initializing");
+        var body = document.getElementsByTagName('body');
+
+        var topDiv = document.createElement('div');
+        var topTitleSpan = document.createElement('span');
+        topTitleSpan.id = 'topTitle';
+        topTitleSpan.innerHTML = 
+            "<b>Sevenex.</b> An application for quick interval workouts.";
+        topDiv.appendChild(topTitleSpan);
+        var selectWorkoutSpan = document.createElement('span');
+        selectWorkoutSpan.id = 'selectWorkout';
+        var selectWorkoutSelector = document.createElement('select');
+        selectWorkoutSelector.id = 'selectWorkoutSelector';
+        selectWorkoutSelector.addEventListener('change', selectWorkoutCallback);
+        selectWorkoutSpan.appendChild(selectWorkoutSelector);
+        topDiv.appendChild(selectWorkoutSpan);
 
         let creditDiv = document.createElement('div');
         creditDiv.id = 'creditDiv';
         creditDiv.innerHTML = 
             'Code on <a href="https://github.com/ojplg/sevenex">github</a>.'
             + 'Patches welcome!';
+
+        timerScreen = new TimerScreen();
+        let gridDiv = timerScreen.gridDiv;
 
         document.body.appendChild(document.createElement('hr'));
         document.body.appendChild(topDiv);
@@ -249,21 +262,15 @@ SEVENEX.init = function() {
             let next = progress.advanceTime();
 
             if ( next ) {
-    
                 var activity = program.activities[progress.index];
                 var nextActivity = program.nextNonRestActivity(progress.index);
                 progress.index++;
-            
-                var actSpan = document.getElementById('nameDiv');
-                actSpan.innerHTML = activity.name;
                 progress.timeRemainingUntilNext = activity.time;
+                
+                var nextActivityName = nextActivity ?
+                    'Next:&nbsp;' + nextActivity.name : '';
 
-                var nextActSpan = document.getElementById('nextActivityDiv');
-                if ( nextActivity ){
-                    nextActSpan.innerHTML = 'Next: ' + nextActivity.name;
-                } else {
-                    nextActSpan.innerHTML = '';
-                }
+                timerScreen.setActivityNames(activity.name,nextActivityName);
             }
     
             var remainingTime = formatTime( progress.timeRemainingUntilNext );
