@@ -154,6 +154,22 @@ SEVENEX.init = function() {
         setActiveProgram(selectedProgram);
     }
 
+    function StagesPanel(){    
+        this.stagesDiv = document.createElement('div');
+        this.stagesDiv.id = 'stagesDiv';
+
+        this.clear = function(){ this.stagesDiv.innerHTML = ''; }
+
+        this.setStages = function(activityNames){
+            var index = 1;
+            activityNames.forEach( name => {
+                var actDiv = document.createElement('div');
+                actDiv.innerHTML = index + ") " + name;
+                index++;
+                this.stagesDiv.appendChild(actDiv);
+            });   
+        }
+    }
 
     function TimerScreen(){
 
@@ -166,14 +182,13 @@ SEVENEX.init = function() {
         let configDiv = document.createElement('div');
         configDiv.id = 'configDiv';
 
-        var stagesDiv = document.createElement('div');
-        stagesDiv.id = 'stagesDiv';
-        
+        this.stagesPanel = new StagesPanel();
+
         leftColumnDiv.appendChild(programStatsDiv);
         leftColumnDiv.appendChild(document.createElement('hr'));
         leftColumnDiv.appendChild(configDiv);
         leftColumnDiv.appendChild(document.createElement('hr'));
-        leftColumnDiv.appendChild(stagesDiv);
+        leftColumnDiv.appendChild(this.stagesPanel.stagesDiv);
 
         var actDiv = document.createElement('div');
         actDiv.id = 'actDiv';
@@ -341,22 +356,6 @@ SEVENEX.init = function() {
         setStatValue("percentComplete", "0");
     }
 
-    var clearStages = function(){
-        var stagesDiv = document.getElementById('stagesDiv');
-        stagesDiv.innerHTML = '';
-    }
-
-    var initStages = function(activityNames){
-        var stagesDiv = document.getElementById('stagesDiv');
-        var index = 1;
-        activityNames.forEach( name => {
-            var actDiv = document.createElement('div');
-            actDiv.innerHTML = index + ") " + name;
-            index++;
-            stagesDiv.appendChild(actDiv);
-        });   
-    }
-
     var populateWorkoutSelector = function(){
         var selector = document.getElementById('selectWorkoutSelector');
 
@@ -432,8 +431,8 @@ SEVENEX.init = function() {
         program = selectedProgram;
         renderInitialStatValues(program);
         initControls();
-        clearStages();
-        initStages(program.activityNames);
+        timerScreen.stagesPanel.clear();
+        timerScreen.stagesPanel.setStages(program.activityNames);
         progress = new Progress();
         activityDiv();
     }
