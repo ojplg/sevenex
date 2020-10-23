@@ -287,7 +287,6 @@ SEVENEX.init = function() {
 
     var drawScreen = function(){
         console.log("Sevenex initializing");
-        var body = document.getElementsByTagName('body');
 
         var topDiv = document.createElement('div');
         var topTitleSpan = document.createElement('span');
