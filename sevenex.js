@@ -169,7 +169,54 @@ SEVENEX.init = function() {
                 this.stagesDiv.appendChild(actDiv);
             });   
         }
+
+        var newStatDiv = function(baseId, labelName ){
+            let newDiv = document.createElement('div');
+            newDiv.id = baseId + 'Div';
+            let labelSpan = document.createElement('span');
+            labelSpan.id = baseId + "LabelSpan";
+            labelSpan.innerHTML = labelName;
+            newDiv.appendChild(labelSpan);
+            let valueSpan = document.createElement('span');
+            valueSpan.id = baseId + "ValueSpan";
+            valueSpan.className = 'left_column_value'
+            newDiv.appendChild(valueSpan);
+            
+            return newDiv;
+        }
+
+        this.setStatValue = function(baseId, value){
+            var valueSpan = document.getElementById(baseId + "ValueSpan");
+            valueSpan.innerHTML = value;
+        }
+
+        this.initStats = function(){
+
+            let statsDiv = document.getElementById('programStatsDiv');
+        
+            let totalTimeDiv = newStatDiv("totalTime", "Total Time");
+            statsDiv.appendChild(totalTimeDiv);
+
+            let elapsedTimeDiv = newStatDiv("elapsedTime", "Elapsed Time");
+            statsDiv.appendChild(elapsedTimeDiv);
+
+            let remainingTimeDiv = newStatDiv("totalRemainingTime", "Remaining Time");
+            statsDiv.appendChild(remainingTimeDiv);
+
+            let percentCompleteDiv = newStatDiv("percentComplete", "Percent Complete");
+            statsDiv.appendChild(percentCompleteDiv);
+        }
+
+        this.renderInitialStatValues = function(program){
+            this.setStatValue("totalTime", 
+                    formatTime(program.totalTime));
+            this.setStatValue("elapsedTime", formatTime(0));
+            this.setStatValue("totalRemainingTime", 
+                    formatTime(program.totalTime));
+            this.setStatValue("percentComplete", "0");
+        }
     }
+
 
     function TimerScreen(){
 
@@ -312,50 +359,6 @@ SEVENEX.init = function() {
         setTimeout(activityDiv, 25);
     }
 
-    var newStatDiv = function(baseId, labelName ){
-        let newDiv = document.createElement('div');
-        newDiv.id = baseId + 'Div';
-        let labelSpan = document.createElement('span');
-        labelSpan.id = baseId + "LabelSpan";
-        labelSpan.innerHTML = labelName;
-        newDiv.appendChild(labelSpan);
-        let valueSpan = document.createElement('span');
-        valueSpan.id = baseId + "ValueSpan";
-        valueSpan.className = 'left_column_value'
-        newDiv.appendChild(valueSpan);
-    
-        return newDiv;
-    }
-
-    var setStatValue = function(baseId, value){
-        var valueSpan = document.getElementById(baseId + "ValueSpan");
-        valueSpan.innerHTML = value;
-    }
-
-    var initStats = function(){
-
-        let statsDiv = document.getElementById('programStatsDiv');
-        
-        let totalTimeDiv = newStatDiv("totalTime", "Total Time");
-        statsDiv.appendChild(totalTimeDiv);
-
-        let elapsedTimeDiv = newStatDiv("elapsedTime", "Elapsed Time");
-        statsDiv.appendChild(elapsedTimeDiv);
-
-        let remainingTimeDiv = newStatDiv("totalRemainingTime", "Remaining Time");
-        statsDiv.appendChild(remainingTimeDiv);
-
-        let percentCompleteDiv = newStatDiv("percentComplete", "Percent Complete");
-        statsDiv.appendChild(percentCompleteDiv);
-    }
-
-    var renderInitialStatValues = function(program){
-        setStatValue("totalTime", formatTime(program.totalTime));
-        setStatValue("elapsedTime", formatTime(0));
-        setStatValue("totalRemainingTime", formatTime(program.totalTime));
-        setStatValue("percentComplete", "0");
-    }
-
     var populateWorkoutSelector = function(){
         var selector = document.getElementById('selectWorkoutSelector');
 
@@ -423,13 +426,9 @@ SEVENEX.init = function() {
         setActiveProgram(randomOrderProgram);
     }
 
-    function foo(s){
-        console.log("tada " +s);
-    }
-
     var setActiveProgram = function(selectedProgram){
         program = selectedProgram;
-        renderInitialStatValues(program);
+        timerScreen.stagesPanel.renderInitialStatValues(program);
         initControls();
         timerScreen.stagesPanel.clear();
         timerScreen.stagesPanel.setStages(program.activityNames);
@@ -438,10 +437,9 @@ SEVENEX.init = function() {
     }
 
     var start = function(){
-        foo("bully");
         loadRemoteWorkouts();
         drawScreen();
-        initStats();
+        timerScreen.stagesPanel.initStats();
         var progressButton = document.getElementById('progressButton');
         progressButton.onclick = function(){ progress.toggle();  }
         setActiveProgram(defaultProgram);
