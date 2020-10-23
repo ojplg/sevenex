@@ -9,7 +9,6 @@ Timer for [NYTimes Seven Minute Workout](https://www.nytimes.com/guides/well/act
  * Five second countdown before start
  * Detect end of workout
  * Indicate complete/active/upcoming in side panel
- * Clean up excess randomize buttons
  * Clear activity pane on workout reload
  * Make default work without server try/catch?
  * Rewind button (to beginning of last exercise)
