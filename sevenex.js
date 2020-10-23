@@ -431,7 +431,6 @@ SEVENEX.init = function() {
     var setActiveProgram = function(selectedProgram){
         program = selectedProgram;
         timerScreen.stagesPanel.renderInitialStatValues(program);
-        initControls();
         timerScreen.stagesPanel.clear();
         timerScreen.stagesPanel.setStages(program.activityNames);
         progress = new Progress();
@@ -442,6 +441,7 @@ SEVENEX.init = function() {
         loadRemoteWorkouts();
         drawScreen();
         timerScreen.stagesPanel.initStats();
+        initControls();
         var progressButton = document.getElementById('progressButton');
         progressButton.onclick = function(){ progress.toggle();  }
         setActiveProgram(defaultProgram);
