@@ -170,7 +170,7 @@ SEVENEX.init = function() {
             });   
         }
 
-        var newStatDiv = function(baseId, labelName ){
+        this.newStatDiv = function(baseId, labelName ){
             let newDiv = document.createElement('div');
             newDiv.id = baseId + 'Div';
             let labelSpan = document.createElement('span');
@@ -182,11 +182,13 @@ SEVENEX.init = function() {
             valueSpan.className = 'left_column_value'
             newDiv.appendChild(valueSpan);
             
+            this[valueSpan.id] = valueSpan;
+
             return newDiv;
         }
 
         this.setStatValue = function(baseId, value){
-            var valueSpan = document.getElementById(baseId + "ValueSpan");
+            var valueSpan = this[baseId + "ValueSpan"];
             valueSpan.innerHTML = value;
         }
 
@@ -194,16 +196,16 @@ SEVENEX.init = function() {
 
             let statsDiv = document.getElementById('programStatsDiv');
         
-            let totalTimeDiv = newStatDiv("totalTime", "Total Time");
+            let totalTimeDiv = this.newStatDiv("totalTime", "Total Time");
             statsDiv.appendChild(totalTimeDiv);
 
-            let elapsedTimeDiv = newStatDiv("elapsedTime", "Elapsed Time");
+            let elapsedTimeDiv = this.newStatDiv("elapsedTime", "Elapsed Time");
             statsDiv.appendChild(elapsedTimeDiv);
 
-            let remainingTimeDiv = newStatDiv("totalRemainingTime", "Remaining Time");
+            let remainingTimeDiv = this.newStatDiv("totalRemainingTime", "Remaining Time");
             statsDiv.appendChild(remainingTimeDiv);
 
-            let percentCompleteDiv = newStatDiv("percentComplete", "Percent Complete");
+            let percentCompleteDiv = this.newStatDiv("percentComplete", "Percent Complete");
             statsDiv.appendChild(percentCompleteDiv);
         }
 
