@@ -171,6 +171,13 @@ SEVENEX.init = function() {
             });   
         }
 
+    }
+
+    function StatsPanel(){
+
+        this.programStatsDiv = document.createElement('div');
+        this.programStatsDiv.id = 'programStatsDiv';
+
         this.newStatDiv = function(baseId, labelName ){
             let newDiv = document.createElement('div');
             newDiv.id = baseId + 'Div';
@@ -193,23 +200,6 @@ SEVENEX.init = function() {
             valueSpan.innerHTML = value;
         }
 
-        this.initStats = function(){
-
-            let statsDiv = document.getElementById('programStatsDiv');
-        
-            let totalTimeDiv = this.newStatDiv("totalTime", "Total Time");
-            statsDiv.appendChild(totalTimeDiv);
-
-            let elapsedTimeDiv = this.newStatDiv("elapsedTime", "Elapsed Time");
-            statsDiv.appendChild(elapsedTimeDiv);
-
-            let remainingTimeDiv = this.newStatDiv("totalRemainingTime", "Remaining Time");
-            statsDiv.appendChild(remainingTimeDiv);
-
-            let percentCompleteDiv = this.newStatDiv("percentComplete", "Percent Complete");
-            statsDiv.appendChild(percentCompleteDiv);
-        }
-
         this.renderInitialStatValues = function(program){
             this.setStatValue("totalTime", 
                     formatTime(program.totalTime));
@@ -219,16 +209,24 @@ SEVENEX.init = function() {
             this.setStatValue("percentComplete", "0");
         }
 
-    }
 
+        this.totalTimeDiv = this.newStatDiv("totalTime", "Total Time");
+        this.programStatsDiv.appendChild(this.totalTimeDiv);
+
+        this.elapsedTimeDiv = this.newStatDiv("elapsedTime", "Elapsed Time");
+        this.programStatsDiv.appendChild(this.elapsedTimeDiv);
+
+        this.remainingTimeDiv = this.newStatDiv("totalRemainingTime", "Remaining Time");
+        this.programStatsDiv.appendChild(this.remainingTimeDiv);
+
+        this.percentCompleteDiv = this.newStatDiv("percentComplete", "Percent Complete");
+        this.programStatsDiv.appendChild(this.percentCompleteDiv);
+    }
 
     function TimerScreen(){
 
         var leftColumnDiv = document.createElement('div');
         leftColumnDiv.id = 'left_column';
-
-        let programStatsDiv = document.createElement('div');
-        programStatsDiv.id = 'programStatsDiv';
 
         let configDiv = document.createElement('div');
         configDiv.id = 'configDiv';
@@ -241,7 +239,9 @@ SEVENEX.init = function() {
       
         this.stagesPanel = new StagesPanel();
 
-        leftColumnDiv.appendChild(programStatsDiv);
+        this.statsPanel = new StatsPanel();
+
+        leftColumnDiv.appendChild(this.statsPanel.programStatsDiv);
         leftColumnDiv.appendChild(document.createElement('hr'));
         leftColumnDiv.appendChild(configDiv);
         leftColumnDiv.appendChild(document.createElement('hr'));
@@ -429,7 +429,7 @@ SEVENEX.init = function() {
 
     var setActiveProgram = function(selectedProgram){
         program = selectedProgram;
-        timerScreen.stagesPanel.renderInitialStatValues(program);
+        timerScreen.statsPanel.renderInitialStatValues(program);
         timerScreen.stagesPanel.clear();
         timerScreen.stagesPanel.setStages(program.activityNames);
         progress = new Progress();
@@ -442,7 +442,6 @@ SEVENEX.init = function() {
         timerScreen = new TimerScreen();
         contentDiv.appendChild(timerScreen.gridDiv);
 
-        timerScreen.stagesPanel.initStats();
         var progressButton = document.getElementById('progressButton');
         progressButton.onclick = function(){ progress.toggle();  }
         setActiveProgram(defaultProgram);
