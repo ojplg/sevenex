@@ -106,6 +106,20 @@ SEVENEX.init = function() {
             return null;
         }        
 
+        p.priorNonRestActivity = function(index){
+            index--;
+            var priorThing = p.activities[index];
+            while(priorThing){
+                if(priorThing.isRest){
+                    index--;
+                    priorThing = p.activities[index];
+                } else {
+                    return priorThing;
+                }
+            }
+            return null;
+        }
+
         return p;
     }
 
@@ -168,9 +182,17 @@ SEVENEX.init = function() {
                 actDiv.innerHTML = index + ") " + name;
                 index++;
                 this.stagesDiv.appendChild(actDiv);
+                this[name] = actDiv;
             });   
         }
 
+        this.setCurrentActivity = function(activityName){
+            this[activityName].className = "currentActivity";
+        }
+
+        this.setCompletedActivity = function(activityName){
+            this[activityName].className = "completedActivity";
+        }
     }
 
     function StatsPanel(){
@@ -348,8 +370,17 @@ SEVENEX.init = function() {
             let next = progress.advanceTime();
 
             if ( next ) {
+                let priorActivity = program.priorNonRestActivity(progress.index);
+                if ( priorActivity != null ) {
+                    timerScreen.stagesPanel.setCompletedActivity(priorActivity.name);
+                }
                 var activity = program.activities[progress.index];
                 var nextActivity = program.nextNonRestActivity(progress.index);
+                if ( ! activity.isRest ){
+                    timerScreen.stagesPanel.setCurrentActivity(activity.name);
+                } else {
+                    timerScreen.stagesPanel.setCurrentActivity(nextActivity.name);
+                }
                 progress.index++;
                 progress.timeRemainingUntilNext = activity.time;
                 

@@ -36,3 +36,11 @@ span.left_column_value {
 #selectWorkout {
     float: right;
 }
+div.currentActivity {
+    background-color: Red;
+    font-weight: bold;
+}
+div.completedActivity {
+   background-color: Blue;
+}
+    
