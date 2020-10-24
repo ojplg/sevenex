@@ -41,6 +41,7 @@ div.currentActivity {
     font-weight: bold;
 }
 div.completedActivity {
-   background-color: Blue;
+    background-color: DarkGrey;
+    color: LightGrey;     
 }
     
