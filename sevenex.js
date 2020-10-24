@@ -17,6 +17,7 @@ SEVENEX.init = function() {
     var progress;
 
     var timerScreen;
+    var contentDiv;
 
     var defaultWorkout = {
         "name":"Default",
@@ -308,13 +309,13 @@ SEVENEX.init = function() {
             'Code on <a href="https://github.com/ojplg/sevenex">github</a>.'
             + 'Patches welcome!';
 
-        timerScreen = new TimerScreen();
-        let gridDiv = timerScreen.gridDiv;
+        contentDiv = document.createElement('div');
+        contentDiv.id = 'contentDiv';
 
         document.body.appendChild(document.createElement('hr'));
         document.body.appendChild(topDiv);
         document.body.appendChild(document.createElement('hr'));
-        document.body.appendChild(gridDiv);
+        document.body.appendChild(contentDiv);
         document.body.appendChild(creditDiv);
     }
 
@@ -439,6 +440,9 @@ SEVENEX.init = function() {
     var start = function(){
         loadRemoteWorkouts();
         drawScreen();
+        timerScreen = new TimerScreen();
+        contentDiv.appendChild(timerScreen.gridDiv);
+
         timerScreen.stagesPanel.initStats();
         initControls();
         var progressButton = document.getElementById('progressButton');
