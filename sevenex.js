@@ -330,6 +330,8 @@ SEVENEX.init = function() {
     }
 
     function FormScreen(){
+        
+        // header data
         let returnButton = document.createElement('button');
         returnButton.id = 'returnButton';
         returnButton.innerHTML = 'Return';
@@ -338,10 +340,51 @@ SEVENEX.init = function() {
         let formHeaderDiv = document.createElement('div');
         formHeaderDiv.appendChild(returnButton);
         
+        // form elements
+
+        // name of workout
+        let nameLabel = document.createElement('label');
+        nameLabel.innerHTML = 'Name';
+        nameLabel['for'] = 'nameInput';
+        let nameInput = document.createElement('input');
+        nameInput.id = 'nameInput';
+        let nameDiv = document.createElement('div');
+        nameDiv.appendChild(nameLabel);
+        nameDiv.appendChild(nameInput);
+
+        // rest time
+        let restTimeLabel = document.createElement('label');
+        restTimeLabel.innerHTML = 'Rest Time';
+        restTimeLabel['for'] = 'restTimeInput';
+        let restTimeInput = document.createElement('input');
+        restTimeInput.id = 'restTimeInput';
+        let restTimeDiv = document.createElement('div');
+        restTimeDiv.appendChild(restTimeLabel);
+        restTimeDiv.appendChild(restTimeInput);
+
+        // save
+        let saveButton = document.createElement('button');
+        saveButton.innerHTML = 'Save';    
+        saveButton.onclick = function(){ 
+            let workout = {};
+            workout.name = nameInput.value;
+            workout.restTime = restTimeInput.value;
+            console.log('saving: ' + JSON.stringify(workout));
+        };
+        let saveDiv = document.createElement('div');
+        saveDiv.appendChild(saveButton);
+    
+        let formPanelDiv = document.createElement('div');
+        formPanelDiv.appendChild(nameDiv);
+        formPanelDiv.appendChild(restTimeDiv);
+        formPanelDiv.appendChild(saveDiv);
+
+        // overall div
         this.formScreenDiv = document.createElement('div');
         this.formScreenDiv.appendChild(formHeaderDiv);
+        this.formScreenDiv.appendChild(document.createElement('hr'));
+        this.formScreenDiv.appendChild(formPanelDiv);
     }   
-
 
     var drawScreen = function(){
         console.log("Sevenex initializing");
