@@ -218,6 +218,7 @@ SEVENEX.init = function() {
                     formatTime(program.totalTime));
             this.setStatValue("percentComplete", "0");
         }
+
     }
 
 
@@ -232,6 +233,12 @@ SEVENEX.init = function() {
         let configDiv = document.createElement('div');
         configDiv.id = 'configDiv';
 
+        var randomizeButton = document.createElement('button');
+        randomizeButton.innerHTML = "Randomize";
+        randomizeButton.onclick = randomizeActivities;
+        
+        configDiv.appendChild(randomizeButton);
+      
         this.stagesPanel = new StagesPanel();
 
         leftColumnDiv.appendChild(programStatsDiv);
@@ -285,6 +292,7 @@ SEVENEX.init = function() {
             this.nextActivityDiv.innerHTML = nextActivity;
         };
     }
+
 
     var drawScreen = function(){
         console.log("Sevenex initializing");
@@ -372,16 +380,7 @@ SEVENEX.init = function() {
         });
     }
 
-    var initControls = function(){
-        var randomizeButton = document.createElement('button');
-        randomizeButton.innerHTML = "Randomize";
-        randomizeButton.onclick = randomizeActivities;
-        
-        var configDiv = document.getElementById('configDiv');
-        configDiv.appendChild(randomizeButton);
-    }
-
-    var shuffle = function(array) {
+     var shuffle = function(array) {
         var currentIndex = array.length, temporaryValue, randomIndex;
 
         // While there remain elements to shuffle...
@@ -444,7 +443,6 @@ SEVENEX.init = function() {
         contentDiv.appendChild(timerScreen.gridDiv);
 
         timerScreen.stagesPanel.initStats();
-        initControls();
         var progressButton = document.getElementById('progressButton');
         progressButton.onclick = function(){ progress.toggle();  }
         setActiveProgram(defaultProgram);
