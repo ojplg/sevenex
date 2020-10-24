@@ -329,23 +329,41 @@ SEVENEX.init = function() {
         };
     }
 
+    function FormScreen(){
+        let returnButton = document.createElement('button');
+        returnButton.id = 'returnButton';
+        returnButton.innerHTML = 'Return';
+        returnButton.onclick = function(){ renderTimerScreen(); }
+    
+        let formHeaderDiv = document.createElement('div');
+        formHeaderDiv.appendChild(returnButton);
+        
+        this.formScreenDiv = document.createElement('div');
+        this.formScreenDiv.appendChild(formHeaderDiv);
+    }   
+
 
     var drawScreen = function(){
         console.log("Sevenex initializing");
 
-        var topDiv = document.createElement('div');
-        var topTitleSpan = document.createElement('span');
+        let topDiv = document.createElement('div');
+        let topTitleSpan = document.createElement('span');
         topTitleSpan.id = 'topTitle';
         topTitleSpan.innerHTML = 
             "<b>Sevenex.</b> An application for quick interval workouts.";
         topDiv.appendChild(topTitleSpan);
-        var selectWorkoutSpan = document.createElement('span');
+        let selectWorkoutSpan = document.createElement('span');
         selectWorkoutSpan.id = 'selectWorkout';
-        var selectWorkoutSelector = document.createElement('select');
+        let selectWorkoutSelector = document.createElement('select');
         selectWorkoutSelector.id = 'selectWorkoutSelector';
         selectWorkoutSelector.addEventListener('change', selectWorkoutCallback);
         selectWorkoutSpan.appendChild(selectWorkoutSelector);
         topDiv.appendChild(selectWorkoutSpan);
+        let newWorkoutButton = document.createElement('button');
+        newWorkoutButton.id = 'newWorkoutButton';
+        newWorkoutButton.innerHTML = 'New';
+        newWorkoutButton.onclick = renderFormScreen;
+        selectWorkoutSpan.appendChild(newWorkoutButton);
 
         let creditDiv = document.createElement('div');
         creditDiv.id = 'creditDiv';
@@ -459,6 +477,20 @@ SEVENEX.init = function() {
         setActiveProgram(randomOrderProgram);
     }
 
+    var renderFormScreen = function() {
+        contentDiv.innerHTML = '';
+        let formScreen = new FormScreen();
+        contentDiv.appendChild(formScreen.formScreenDiv);
+    }
+
+    var renderTimerScreen = function() {
+        contentDiv.innerHTML = ''; 
+        timerScreen = new TimerScreen();
+        contentDiv.appendChild(timerScreen.gridDiv);
+
+        setActiveProgram(defaultProgram);
+    }
+
     var setActiveProgram = function(selectedProgram){
         program = selectedProgram;
         timerScreen.statsPanel.renderInitialStatValues(program);
@@ -471,10 +503,7 @@ SEVENEX.init = function() {
     var start = function(){
         loadRemoteWorkouts();
         drawScreen();
-        timerScreen = new TimerScreen();
-        contentDiv.appendChild(timerScreen.gridDiv);
-
-        setActiveProgram(defaultProgram);
+        renderTimerScreen();
     }
 
     that.start = start;
