@@ -362,6 +362,33 @@ SEVENEX.init = function() {
         restTimeDiv.appendChild(restTimeLabel);
         restTimeDiv.appendChild(restTimeInput);
 
+        // interval 
+        let intervalHeadingDiv = document.createElement('div');
+        intervalHeadingDiv.innerHTML = 'interval';
+
+        let intervalNameLabel = document.createElement('label');
+        intervalNameLabel.innerHTML = 'Name';
+        intervalNameLabel['for'] = 'intervalNameInput';
+        let intervalNameInput = document.createElement('input');
+        intervalNameInput.id = 'intervalNameInput';
+        let intervalNameDiv = document.createElement('div');
+        intervalNameDiv.appendChild(intervalNameLabel);
+        intervalNameDiv.appendChild(intervalNameInput);
+
+        let intervalTimeLabel = document.createElement('label');
+        intervalTimeLabel.innerHTML = 'Interval Time';
+        intervalTimeLabel['for'] = 'intervalTimeInput';
+        let intervalTimeInput = document.createElement('input');
+        intervalTimeInput.id = 'intervalTimeInput';
+        let intervalTimeDiv = document.createElement('div');
+        intervalTimeDiv.appendChild(intervalTimeLabel);
+        intervalTimeDiv.appendChild(intervalTimeInput);
+
+        let intervalDiv = document.createElement('div');
+        intervalDiv.appendChild(intervalHeadingDiv);
+        intervalDiv.appendChild(intervalNameDiv);
+        intervalDiv.appendChild(intervalTimeDiv);
+    
         // save
         let saveButton = document.createElement('button');
         saveButton.innerHTML = 'Save';    
@@ -377,6 +404,7 @@ SEVENEX.init = function() {
         let formPanelDiv = document.createElement('div');
         formPanelDiv.appendChild(nameDiv);
         formPanelDiv.appendChild(restTimeDiv);
+        formPanelDiv.appendChild(intervalDiv);
         formPanelDiv.appendChild(saveDiv);
 
         // overall div
