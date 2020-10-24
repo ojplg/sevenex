@@ -288,6 +288,7 @@ SEVENEX.init = function() {
         progressButton.innerHTML = 'Start';
         progressButton.type = 'button';
         progressButton.className = 'progress_button';
+        progressButton.onclick = function(){ progress.toggle();  }
 
         let controlDiv = document.createElement('div');
         controlDiv.id = 'controlDiv';
@@ -442,8 +443,6 @@ SEVENEX.init = function() {
         timerScreen = new TimerScreen();
         contentDiv.appendChild(timerScreen.gridDiv);
 
-        var progressButton = document.getElementById('progressButton');
-        progressButton.onclick = function(){ progress.toggle();  }
         setActiveProgram(defaultProgram);
     }
 
