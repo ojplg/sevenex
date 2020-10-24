@@ -221,6 +221,19 @@ SEVENEX.init = function() {
 
         this.percentCompleteDiv = this.newStatDiv("percentComplete", "Percent Complete");
         this.programStatsDiv.appendChild(this.percentCompleteDiv);
+
+        this.updateStats = function( progress, program ){
+            var elapsedTime = formatTime ( progress.totalTimeElapsed );
+            this.elapsedTimeValueSpan.innerHTML = elapsedTime;
+
+            var totalRemainingMillis = program.totalTime - progress.totalTimeElapsed;
+            var totalRemainingTime = formatTime ( totalRemainingMillis );
+            this.totalRemainingTimeValueSpan.innerHTML = totalRemainingTime;
+    
+            var percentComplete = Math.round(100*
+                progress.totalTimeElapsed/program.totalTime);
+            this.percentCompleteValueSpan.innerHTML = percentComplete;
+        }
     }
 
     function TimerScreen(){
@@ -327,7 +340,7 @@ SEVENEX.init = function() {
         document.body.appendChild(creditDiv);
     }
 
-    var activityDiv = function(){
+    var timerLoop = function(){
 
         if ( progress.running ){
             
@@ -345,28 +358,15 @@ SEVENEX.init = function() {
                 timerScreen.setActivityNames(activity.name,nextActivityName);
             }
     
+            timerScreen.statsPanel.updateStats(progress, program);
+
             var remainingTime = formatTime( progress.timeRemainingUntilNext );
             var counterDiv = document.getElementById('counterDiv');
             counterDiv.innerHTML = remainingTime;
 
-            var elapsedTime = formatTime ( progress.totalTimeElapsed );
-            var elapsedTimeValueSpan = document.getElementById('elapsedTimeValueSpan');
-            elapsedTimeValueSpan.innerHTML = elapsedTime;
-
-            var totalRemainingMillis = program.totalTime - progress.totalTimeElapsed;
-            var totalRemainingTime = formatTime ( totalRemainingMillis );
-            var totalRemainingValueSpan = document.getElementById(
-                'totalRemainingTimeValueSpan');
-            totalRemainingValueSpan.innerHTML = totalRemainingTime;
-    
-            var percentComplete = Math.round(100*
-                progress.totalTimeElapsed/program.totalTime);
-            var percentCompleteValueSpan = document.getElementById(
-                'percentCompleteValueSpan');
-            percentCompleteValueSpan.innerHTML = percentComplete;
         }
 
-        setTimeout(activityDiv, 25);
+        setTimeout(timerLoop, 25);
     }
 
     var populateWorkoutSelector = function(){
@@ -433,7 +433,7 @@ SEVENEX.init = function() {
         timerScreen.stagesPanel.clear();
         timerScreen.stagesPanel.setStages(program.activityNames);
         progress = new Progress();
-        activityDiv();
+        timerLoop();
     }
 
     var start = function(){
