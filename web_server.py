@@ -6,7 +6,7 @@ serverPort = 8088
 
 class MyServer(BaseHTTPRequestHandler):
     def do_GET(self):
-        print("REQUESTED: " + self.path)        
+        print("GET REQUESTED: " + self.path)        
         self.send_response(200)
         self.send_header("Content-type", "application/json")
         self.end_headers()
@@ -17,13 +17,18 @@ class MyServer(BaseHTTPRequestHandler):
     def do_POST(self):
         try:
             print("POST REQUESTED " + self.path)
-            content_length = int(self.headers['Content-Length'])
-            body = self.rfile.read(content_length)
-            print("POST BODY " + str(body))
-            self.send_response(200)
-            self.send_header("Content-type", "application/json")
-            self.end_headers()
-            self.wfile.write(b'')
+            if self.path == '/save':
+                content_length = int(self.headers['Content-Length'])
+                body = self.rfile.read(content_length)
+                print("POST BODY " + str(body))
+                self.send_response(200)
+                self.send_header("Content-type", "application/json")
+                self.end_headers()
+                self.wfile.write(b'')
+            else: 
+                self.send_response(404)
+                self.end_headers()
+                self.wfile.write(b'Not found')
         except Exception as a:
             print(e)
        

@@ -64,7 +64,7 @@ SEVENEX.init = function() {
 
         let requester = new XMLHttpRequest();
         requester.addEventListener("load", workoutsLoaded);
-        requester.open("GET", "/sevenex/workouts/");
+        requester.open("GET", "/sevenex/workouts");
         requester.send();
     }
 
@@ -430,14 +430,18 @@ SEVENEX.init = function() {
         saveButton.onclick = function(){ 
             let workout = {};
             workout.name = nameInput.value;
-            workout.restTime = restTimeInput.value;
             workout.intervals = 
-                intervals.map(function (interval) 
+                intervals.flatMap(function (interval) 
                     { 
                         let i = {};
-                        i.time = interval.nameInput.value;
-                        i.name = interval.timeInput.value;
-                        return i
+                        i.time = interval.timeInput.value;
+                        i.name = interval.nameInput.value;
+                        i.isRest = false;
+                        let r = {};
+                        r.name = 'Rest';
+                        r.time = restTimeInput.value;
+                        r.isRest = true;
+                        return [ r, i ]
                     });
     
             let workoutJson = JSON.stringify(workout);
@@ -446,7 +450,7 @@ SEVENEX.init = function() {
             let requester = new XMLHttpRequest();
             // FIXME: Something needed here.
             //requester.addEventListener("load", workoutsLoaded);
-            requester.open("POST", "/sevenex/workouts/save/");
+            requester.open("POST", "/sevenex/workouts/save");
             requester.send(workoutJson);
         };
         let saveDiv = document.createElement('div');
