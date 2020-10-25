@@ -430,7 +430,7 @@ SEVENEX.init = function() {
         saveButton.onclick = function(){ 
             let workout = {};
             workout.name = nameInput.value;
-            workout.intervals = 
+            workout.activities = 
                 intervals.flatMap(function (interval) 
                     { 
                         let i = {};
