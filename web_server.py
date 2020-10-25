@@ -17,7 +17,8 @@ class MyServer(BaseHTTPRequestHandler):
     def do_POST(self):
         try:
             print("POST REQUESTED " + self.path)
-            body = self.rfile.read(25)
+            content_length = int(self.headers['Content-Length'])
+            body = self.rfile.read(content_length)
             print("POST BODY " + str(body))
             self.send_response(200)
             self.send_header("Content-type", "application/json")
