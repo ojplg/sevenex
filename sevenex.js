@@ -439,7 +439,15 @@ SEVENEX.init = function() {
                         i.name = interval.timeInput.value;
                         return i
                     });
-            console.log('saving: ' + JSON.stringify(workout));
+    
+            let workoutJson = JSON.stringify(workout);
+            console.log('saving: ' + workoutJson);
+
+            let requester = new XMLHttpRequest();
+            // FIXME: Something needed here.
+            //requester.addEventListener("load", workoutsLoaded);
+            requester.open("POST", "/sevenex/workouts/save/");
+            requester.send(workoutJson);
         };
         let saveDiv = document.createElement('div');
         saveDiv.appendChild(saveButton);
