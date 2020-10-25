@@ -44,4 +44,8 @@ div.completedActivity {
     background-color: DimGrey;
     color: LightGrey;     
 }
+hr.lightrule {
+    width: 75%;
+    color: LightGrey;
+}
     

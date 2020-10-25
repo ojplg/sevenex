@@ -362,33 +362,68 @@ SEVENEX.init = function() {
         restTimeDiv.appendChild(restTimeLabel);
         restTimeDiv.appendChild(restTimeInput);
 
-        // interval 
-        let intervalHeadingDiv = document.createElement('div');
-        intervalHeadingDiv.innerHTML = 'interval';
-
-        let intervalNameLabel = document.createElement('label');
-        intervalNameLabel.innerHTML = 'Name';
-        intervalNameLabel['for'] = 'intervalNameInput';
-        let intervalNameInput = document.createElement('input');
-        intervalNameInput.id = 'intervalNameInput';
-        let intervalNameDiv = document.createElement('div');
-        intervalNameDiv.appendChild(intervalNameLabel);
-        intervalNameDiv.appendChild(intervalNameInput);
-
-        let intervalTimeLabel = document.createElement('label');
-        intervalTimeLabel.innerHTML = 'Interval Time';
-        intervalTimeLabel['for'] = 'intervalTimeInput';
-        let intervalTimeInput = document.createElement('input');
-        intervalTimeInput.id = 'intervalTimeInput';
-        let intervalTimeDiv = document.createElement('div');
-        intervalTimeDiv.appendChild(intervalTimeLabel);
-        intervalTimeDiv.appendChild(intervalTimeInput);
-
-        let intervalDiv = document.createElement('div');
-        intervalDiv.appendChild(intervalHeadingDiv);
-        intervalDiv.appendChild(intervalNameDiv);
-        intervalDiv.appendChild(intervalTimeDiv);
+        var intervalCount = 0;
+        var intervals = [];
     
+        function Interval(count){
+            this.count = count;
+
+            // interval 
+            let intervalHeadingSpan = document.createElement('span');
+            intervalHeadingSpan.innerHTML = 'interval:&nbsp;';
+
+            let intervalNameLabel = document.createElement('label');
+            intervalNameLabel.innerHTML = 'Name';
+            intervalNameLabel['for'] = 'intervalNameInput' + count;
+            let intervalNameInput = document.createElement('input');
+            intervalNameInput.id = 'intervalNameInput' + count;
+            let intervalNameSpan = document.createElement('span');
+            intervalNameSpan.appendChild(intervalNameLabel);
+            intervalNameSpan.appendChild(intervalNameInput);
+
+            let intervalTimeLabel = document.createElement('label');
+            intervalTimeLabel.innerHTML = 'Interval Time';
+            intervalTimeLabel['for'] = 'intervalTimeInput' + count;
+            let intervalTimeInput = document.createElement('input');
+            intervalTimeInput.id = 'intervalTimeInput' + count;
+            let intervalTimeSpan = document.createElement('span');
+            intervalTimeSpan.appendChild(intervalTimeLabel);
+            intervalTimeSpan.appendChild(intervalTimeInput);
+
+            let intervalDiv = document.createElement('div');
+            let lightrule = document.createElement('hr');
+            lightrule.className = 'lightrule';
+            intervalDiv.appendChild(lightrule);
+            intervalDiv.appendChild(intervalHeadingSpan);
+            intervalDiv.appendChild(intervalNameSpan);
+            intervalDiv.appendChild(intervalTimeSpan);
+        
+            this.intervalDiv = intervalDiv;
+            this.nameInput = intervalNameInput;
+            this.timeInput = intervalTimeInput;
+        }    
+
+        let intervalsDiv = document.createElement('div');
+        let firstInterval = new Interval();
+        intervals.push(firstInterval);
+        intervalsDiv.appendChild(firstInterval.intervalDiv);
+
+        // more intervals
+        let moreButton = document.createElement('button');
+        moreButton.innerHTML = 'Add Interval';
+        moreButton.onclick = function() {
+            console.log("more intervals!"); 
+            intervalCount++;
+            var anotherInterval = new Interval();
+            intervals.push(anotherInterval);
+            intervalsDiv.appendChild(anotherInterval.intervalDiv);
+        }
+        let lightrule = document.createElement('hr');
+        lightrule.className = 'lightrule';
+        let moreDiv = document.createElement('div');
+        moreDiv.appendChild(lightrule);
+        moreDiv.appendChild(moreButton);
+
         // save
         let saveButton = document.createElement('button');
         saveButton.innerHTML = 'Save';    
@@ -396,6 +431,14 @@ SEVENEX.init = function() {
             let workout = {};
             workout.name = nameInput.value;
             workout.restTime = restTimeInput.value;
+            workout.intervals = 
+                intervals.map(function (interval) 
+                    { 
+                        let i = {};
+                        i.time = interval.nameInput.value;
+                        i.name = interval.timeInput.value;
+                        return i
+                    });
             console.log('saving: ' + JSON.stringify(workout));
         };
         let saveDiv = document.createElement('div');
@@ -404,7 +447,8 @@ SEVENEX.init = function() {
         let formPanelDiv = document.createElement('div');
         formPanelDiv.appendChild(nameDiv);
         formPanelDiv.appendChild(restTimeDiv);
-        formPanelDiv.appendChild(intervalDiv);
+        formPanelDiv.appendChild(intervalsDiv);
+        formPanelDiv.appendChild(moreDiv);
         formPanelDiv.appendChild(saveDiv);
 
         // overall div
