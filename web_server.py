@@ -17,12 +17,12 @@ class MyServer(BaseHTTPRequestHandler):
     def do_POST(self):
         try:
             print("POST REQUESTED " + self.path)
-            body = self.rfile.read(0)
+            body = self.rfile.read(25)
             print("POST BODY " + str(body))
             self.send_response(200)
             self.send_header("Content-type", "application/json")
             self.end_headers()
-            self.wfile.write([])
+            self.wfile.write(b'')
         except Exception as a:
             print(e)
        
