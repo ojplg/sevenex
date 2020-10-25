@@ -3,9 +3,12 @@ Timer for [NYTimes Seven Minute Workout](https://www.nytimes.com/guides/well/act
 
 # TODO
 
- * Server side to save workouts
- * Form to create new workouts
- * Form to edit workouts (maybe or copy)
+ * CRUD work
+   * A way to edit workouts (maybe copy)
+   * Validation of submission (web side)
+   * Validation (serverside)
+   * Make form prettier
+   * Change text inputs to selects for times
  * Detect end of workout/add celebration something or other
  * Clear activity pane on workout reload
  * Rewind button (to beginning of last exercise) (and fast forward?)
