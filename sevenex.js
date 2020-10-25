@@ -92,7 +92,7 @@ SEVENEX.init = function() {
                     return accum;
                 } , []);
 
-        p.nextNonRestActivity = function(index){
+        p.nextNonRestIndex = function(index){
             index++;
             var nextThing = p.activities[index]
             while (nextThing){
@@ -100,13 +100,21 @@ SEVENEX.init = function() {
                     index++;
                     nextThing = p.activities[index];
                 } else {
-                    return nextThing;
+                    return index;
                 }
             }
-            return null;
+            return -1;
+        }
+
+        p.nextNonRestActivity = function(index){
+            var nextIndex = p.nextNonRestIndex(index);
+            if (nextIndex == -1){
+                return null;
+            }
+            return p.activities[nextIndex];
         }        
 
-        p.priorNonRestActivity = function(index){
+        p.priorNonRestIndex = function(index){
             index--;
             var priorThing = p.activities[index];
             while(priorThing){
@@ -114,10 +122,18 @@ SEVENEX.init = function() {
                     index--;
                     priorThing = p.activities[index];
                 } else {
-                    return priorThing;
+                    return index;
                 }
             }
-            return null;
+            return -1;
+        }
+        
+        p.priorNonRestActivity = function(index){
+            var priorIndex = p.priorNonRestIndex(index);
+            if (priorIndex == -1){
+                return null;
+            }
+            return p.activities[priorIndex];
         }
 
         return p;
@@ -187,6 +203,7 @@ SEVENEX.init = function() {
         }
 
         this.setCurrentActivity = function(activityName){
+            console.log("setting current activity to " + activityName);
             this[activityName].className = "currentActivity";
         }
 
@@ -312,9 +329,16 @@ SEVENEX.init = function() {
         progressButton.className = 'progress_button';
         progressButton.onclick = function(){ progress.toggle();  }
 
+        let rewindButton = document.createElement('button');
+        rewindButton.id = 'rewindButton';
+        rewindButton.innerHTML = 'Rewind';
+        rewindButton.className = 'rewind_button';
+        rewindButton.onclick = rewind;
+
         let controlDiv = document.createElement('div');
         controlDiv.id = 'controlDiv';
         controlDiv.appendChild(progressButton);
+        controlDiv.appendChild(rewindButton);
 
         actDiv.appendChild(controlDiv);
 
@@ -574,6 +598,13 @@ SEVENEX.init = function() {
         }
 
         return array;
+    }
+
+    var rewind = function(){
+        console.log("Rewinding");
+        var priorIndex = program.priorNonRestIndex(progress.index);
+        console.log("Resetting " + progress.index + " to " + priorIndex);
+        progress.index = priorIndex;
     }
 
     var randomizeActivities = function(){
