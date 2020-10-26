@@ -96,6 +96,9 @@ SEVENEX.init = function() {
             index++;
             var nextThing = p.activities[index]
             while (nextThing){
+                if( index >= p.activities.length ){
+                    break;
+                }
                 if( nextThing.isRest ){
                     index++;
                     nextThing = p.activities[index];
@@ -103,7 +106,7 @@ SEVENEX.init = function() {
                     return index;
                 }
             }
-            return activities.length-1;
+            return p.activities.length-1;
         }
 
         p.nextNonRestActivity = function(index){
