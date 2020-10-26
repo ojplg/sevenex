@@ -139,7 +139,7 @@ SEVENEX.init = function() {
         return p;
     }
 
-    let defaultProgram = workoutToProgram(defaultWorkout, 200);
+    let defaultProgram = workoutToProgram(defaultWorkout,1000);
 
     function Progress(){
         this.index = 0;
@@ -631,29 +631,20 @@ SEVENEX.init = function() {
     }
 
     var rewind = function(){
-        console.log("Rewinding");
         let rewoundActivity = program.activities[progress.index];
 
         let priorIndex = program.priorNonRestIndex(progress.index);
         console.log("Resetting " + progress.index + " to " + priorIndex);
         progress.index = priorIndex;
 
-        // reset total time elapsed
-        // reset time elapsed on interval to 0
-        // reset complete and current in side panel
-        // reset names of current and next in main panel
-
         let currentActivity = program.activities[progress.index];
         let nextActivity = program.nextNonRestActivity(progress.index);
-        // FIXME: Maybe just calculate this directly?
         progress.recalculateTotalTimeElapsed(program);
         progress.timeRemainingUntilNext = currentActivity.time;
-        timerScreen.setActivityNames(currentActivity.name, nextActivity.name);
-        
-        timerScreen.statsPanel.updateStats( program, progress );
 
+        timerScreen.setActivityNames(currentActivity.name, nextActivity.name);
+        timerScreen.statsPanel.updateStats( program, progress );
         timerScreen.stagesPanel.resetProgress( currentActivity.name );
-        
     }
 
     var randomizeActivities = function(){

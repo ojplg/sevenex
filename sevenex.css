@@ -20,6 +20,10 @@ body {
     background-color: SeaGreen;
     font-size: 400%;
 }
+.rewind_button {
+    background-color: SeaGreen;
+    font-size: 400%;
+}
 #creditDiv {
     position: absolute;
     right: 4px;
