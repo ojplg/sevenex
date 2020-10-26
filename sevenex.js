@@ -103,14 +103,11 @@ SEVENEX.init = function() {
                     return index;
                 }
             }
-            return -1;
+            return activities.length-1;
         }
 
         p.nextNonRestActivity = function(index){
             var nextIndex = p.nextNonRestIndex(index);
-            if (nextIndex == -1){
-                return null;
-            }
             return p.activities[nextIndex];
         }        
 
@@ -125,14 +122,17 @@ SEVENEX.init = function() {
                     return index;
                 }
             }
-            return -1;
+            index = 0;
+            priorThing = p.activities[index];
+            while ( priorThing.isRest ){
+                index++;
+                priorThing = p.activities[index];
+            }
+            return index;
         }
         
         p.priorNonRestActivity = function(index){
             var priorIndex = p.priorNonRestIndex(index);
-            if (priorIndex == -1){
-                return null;
-            }
             return p.activities[priorIndex];
         }
 
