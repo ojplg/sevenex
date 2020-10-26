@@ -32,7 +32,7 @@ body {
 #nextActivityDiv {
     font-size: 400%;
     background-color: DarkCyan;
-    color: DarkSlateGrey;
+    color: LightGrey;
 }
 span.left_column_value {
     float: right;

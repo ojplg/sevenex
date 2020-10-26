@@ -3,6 +3,7 @@ Timer for [NYTimes Seven Minute Workout](https://www.nytimes.com/guides/well/act
 
 # TODO
 
+* BUG: LAST INTERVAL IS MESSED UP!
  * CRUD work
    * A way to edit workouts (maybe copy)
    * Validation of submission (web side)
