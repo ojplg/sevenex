@@ -142,7 +142,7 @@ SEVENEX.init = function() {
         return p;
     }
 
-    let defaultProgram = workoutToProgram(defaultWorkout,400);
+    let defaultProgram = workoutToProgram(defaultWorkout,1000);
 
     function Progress(){
         this.index = 0;
