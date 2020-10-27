@@ -30,7 +30,7 @@ class MyServer(BaseHTTPRequestHandler):
 
     def do_POST(self):
         print("POST REQUESTED " + self.path)
-        if self.path == '/save' || path == '/sevenex/save':
+        if self.path == '/save' or path == '/sevenex/save':
             content_length = int(self.headers['Content-Length'])
             body = self.rfile.read(content_length)
             print("POST BODY " + str(body))
