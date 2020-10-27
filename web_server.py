@@ -30,7 +30,7 @@ class MyServer(BaseHTTPRequestHandler):
 
     def do_POST(self):
         print("POST REQUESTED " + self.path)
-        if self.path == '/save':
+        if self.path == '/save' || path == '/sevenex/save':
             content_length = int(self.headers['Content-Length'])
             body = self.rfile.read(content_length)
             print("POST BODY " + str(body))
@@ -38,6 +38,7 @@ class MyServer(BaseHTTPRequestHandler):
             newWorkout = json.loads(body)
             existingWorkouts.append(newWorkout)
             self.saveWorkoutsFile(existingWorkouts)
+            print("SAVED WORKOUTS")
             self.send_response(200)
             self.send_header("Content-type", "application/json")
             self.end_headers()
