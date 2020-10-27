@@ -142,11 +142,11 @@ SEVENEX.init = function() {
         return p;
     }
 
-    let defaultProgram = workoutToProgram(defaultWorkout,1000);
+    let defaultProgram = workoutToProgram(defaultWorkout,400);
 
     function Progress(){
         this.index = 0;
-        this.timeRemainingUntilNext = -1;
+        this.timeRemainingUntilNext = program.activities[0].time; 
         this.lastMeasuredTime = nowTimeMillis();
         this.running = false;
         this.totalTimeElapsed = 0;
@@ -215,7 +215,6 @@ SEVENEX.init = function() {
         }
 
         this.setCurrentActivity = function(activityName){
-            console.log("setting current activity to " + activityName);
             this[activityName].className = "currentActivity";
         }
 
@@ -572,6 +571,10 @@ SEVENEX.init = function() {
             let next = progress.advanceTime();
 
             if ( next ) {
+
+                progress.index++;
+                console.log("Advanced index to " + progress.index);
+
                 let priorActivity = program.priorNonRestActivity(progress.index);
                 if ( priorActivity != null ) {
                     timerScreen.stagesPanel.setCompletedActivity(priorActivity.name);
@@ -583,13 +586,13 @@ SEVENEX.init = function() {
                 } else {
                     timerScreen.stagesPanel.setCurrentActivity(nextActivity.name);
                 }
-                progress.index++;
                 progress.timeRemainingUntilNext = activity.time;
                 
                 var nextActivityName = nextActivity ?
                     'Next:&nbsp;' + nextActivity.name : '';
 
                 timerScreen.setActivityNames(activity.name,nextActivityName);
+                
             }
     
             timerScreen.statsPanel.updateStats(progress, program);
@@ -694,6 +697,8 @@ SEVENEX.init = function() {
 
     var setActiveProgram = function(selectedProgram){
         program = selectedProgram;
+        timerScreen.setActivityNames(program.activities[0].name,
+            program.activities[1].name);
         timerScreen.statsPanel.renderInitialStatValues(program);
         timerScreen.stagesPanel.clear();
         timerScreen.stagesPanel.setStages(program.activityNames);
