@@ -412,14 +412,23 @@ SEVENEX.init = function() {
         let restTimeLabel = document.createElement('label');
         restTimeLabel.innerHTML = 'Rest Time';
         restTimeLabel['for'] = 'restTimeInput';
-        let restTimeInput = document.createElement('input');
+        let restTimeInput = document.createElement('select');
         restTimeInput.id = 'restTimeInput';
+        let restTimeValues = [ 5, 10, 15, 20 ];
+        for( var idx = 0; idx<restTimeValues.length; idx++ ){
+            var option = document.createElement('option');
+            option.value = restTimeValues[idx];
+            option.innerHTML = restTimeValues[idx];
+            restTimeInput.appendChild(option);
+        }
         let restTimeDiv = document.createElement('div');
         restTimeDiv.appendChild(restTimeLabel);
         restTimeDiv.appendChild(restTimeInput);
 
         var intervalCount = 0;
         var intervals = [];
+    
+        let intervalTimeValues = [ 15, 30, 45, 60 ];
     
         function Interval(count){
             this.count = count;
@@ -440,8 +449,15 @@ SEVENEX.init = function() {
             let intervalTimeLabel = document.createElement('label');
             intervalTimeLabel.innerHTML = 'Interval Time';
             intervalTimeLabel['for'] = 'intervalTimeInput' + count;
-            let intervalTimeInput = document.createElement('input');
+            let intervalTimeInput = document.createElement('select');
             intervalTimeInput.id = 'intervalTimeInput' + count;
+            for( var idx = 0; idx<intervalTimeValues.length; idx++ ){
+                var option = document.createElement('option');
+                option.value = intervalTimeValues[idx];
+                option.innerHTML = intervalTimeValues[idx];
+                intervalTimeInput.appendChild(option);
+            }
+
             let intervalTimeSpan = document.createElement('span');
             intervalTimeSpan.appendChild(intervalTimeLabel);
             intervalTimeSpan.appendChild(intervalTimeInput);

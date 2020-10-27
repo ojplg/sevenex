@@ -8,7 +8,6 @@ Timer for [NYTimes Seven Minute Workout](https://www.nytimes.com/guides/well/act
    * Validation of submission (web side)
    * Validation (serverside)
    * Make form prettier
-   * Change text inputs to selects for times
  * Detect end of workout/add celebration something or other
  * Clear activity pane on workout reload
  * Deactivate/grey-out randomize button after start
