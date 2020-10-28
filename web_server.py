@@ -40,7 +40,7 @@ class MyServer(BaseHTTPRequestHandler):
             body = self.rfile.read(content_length)
             print("POST BODY " + str(body))
             existingWorkouts = self.readWorkoutsFileJson()
-            newWorkout = json.loads(body)
+            newWorkout = json.loads(body.decode(encoding='utf-8'))
             existingWorkouts.append(newWorkout)
             self.saveWorkoutsFile(existingWorkouts)
             print("SAVED WORKOUTS")
