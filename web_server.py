@@ -9,14 +9,17 @@ workoutsFilename = './workouts.json'
 
 class MyServer(BaseHTTPRequestHandler):
 
-    def readWorkoutsFileBytes(self):
+    def readWorkoutsFileString(self):
         workouts_file = open(workoutsFilename, 'r', encoding='utf-8') 
-        contents = workouts_file.read()
+        return workouts_file.read()
+
+    def readWorkoutsFileBytes(self):
+        contents = self.readWorkoutsFileString()
         bts = bytearray(contents, encoding='utf-8')
         return bts
         
     def readWorkoutsFileJson(self):
-        return json.loads(self.readWorkoutsFileBytes())        
+        return json.loads(self.readWorkoutsFileString())        
     
     def saveWorkoutsFile(self, workouts):
         workouts_file = open(workoutsFilename, 'w')
