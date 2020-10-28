@@ -10,8 +10,10 @@ workoutsFilename = './workouts.json'
 class MyServer(BaseHTTPRequestHandler):
 
     def readWorkoutsFileBytes(self):
-        workouts_file = open(workoutsFilename, 'rb') 
-        return workouts_file.read()
+        workouts_file = open(workoutsFilename, 'r', encoding='utf-8') 
+        contents = workouts_file.read()
+        bts = bytearray(contents, encoding='utf-8')
+        return bts
         
     def readWorkoutsFileJson(self):
         return json.loads(self.readWorkoutsFileBytes())        
@@ -30,7 +32,7 @@ class MyServer(BaseHTTPRequestHandler):
 
     def do_POST(self):
         print("POST REQUESTED " + self.path)
-        if self.path == '/save' or path == '/sevenex/save':
+        if self.path == '/save':
             content_length = int(self.headers['Content-Length'])
             body = self.rfile.read(content_length)
             print("POST BODY " + str(body))
