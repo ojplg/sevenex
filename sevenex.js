@@ -307,6 +307,29 @@ SEVENEX.init = function() {
         }
     }
 
+    function SituationPanel(){
+        this.situationDiv = document.createElement('div');
+        this.situationDiv.id = 'situationDiv';
+
+        this.nameDiv = document.createElement('div');
+        this.nameDiv.id = 'nameDiv';
+        this.nameDiv.className = 'activity_name';
+        this.nameDiv.innerHTML = '&nbsp;';
+    
+        this.counterDiv = document.createElement('div');
+        this.counterDiv.id = 'counterDiv';
+        this.counterDiv.className = 'activity_time_left';
+        this.counterDiv.innerHTML = '&nbsp;';
+
+        this.nextActivityDiv = document.createElement('div');
+        this.nextActivityDiv.id = 'nextActivityDiv';
+        this.nextActivityDiv.innerHTML = '&nbsp;';
+
+        this.situationDiv.appendChild(this.nameDiv);
+        this.situationDiv.appendChild(this.counterDiv);
+        this.situationDiv.appendChild(this.nextActivityDiv);
+    }
+
     function TimerScreen(){
 
         var leftColumnDiv = document.createElement('div');
@@ -331,27 +354,6 @@ SEVENEX.init = function() {
         leftColumnDiv.appendChild(document.createElement('hr'));
         leftColumnDiv.appendChild(this.stagesPanel.stagesDiv);
 
-        var actDiv = document.createElement('div');
-        actDiv.id = 'actDiv';
-
-        this.nameDiv = document.createElement('div');
-        this.nameDiv.id = 'nameDiv';
-        this.nameDiv.className = 'activity_name';
-        this.nameDiv.innerHTML = '&nbsp;';
-    
-        var counterDiv = document.createElement('div');
-        counterDiv.id = 'counterDiv';
-        counterDiv.className = 'activity_time_left';
-        counterDiv.innerHTML = '&nbsp;';
-
-        this.nextActivityDiv = document.createElement('div');
-        this.nextActivityDiv.id = 'nextActivityDiv';
-        this.nextActivityDiv.innerHTML = '&nbsp;';
-
-        actDiv.appendChild(this.nameDiv);
-        actDiv.appendChild(counterDiv);
-        actDiv.appendChild(this.nextActivityDiv);
-
         var progressButton = document.createElement('button');
         progressButton.id = 'progressButton';
         progressButton.name = 'progress';
@@ -372,6 +374,11 @@ SEVENEX.init = function() {
         controlDiv.appendChild(progressButton);
         controlDiv.appendChild(rewindButton);
 
+        this.situationPanel = new SituationPanel();
+        
+        let actDiv = document.createElement('div');
+        actDiv.id = 'actDiv';
+        actDiv.appendChild(this.situationPanel.situationDiv);
         actDiv.appendChild(controlDiv);
 
         this.gridDiv = document.createElement('div');
@@ -380,8 +387,8 @@ SEVENEX.init = function() {
         this.gridDiv.appendChild(actDiv);
 
         this.setActivityNames = function(currentActivity, nextActivity){
-            this.nameDiv.innerHTML = currentActivity;
-            this.nextActivityDiv.innerHTML = nextActivity;
+            this.situationPanel.nameDiv.innerHTML = currentActivity;
+            this.situationPanel.nextActivityDiv.innerHTML = nextActivity;
         };
     }
 
