@@ -317,7 +317,13 @@ SEVENEX.init = function() {
         this.counterDiv.className = 'activity_time_left';
         this.counterDiv.innerHTML = '&nbsp;';
 
+        this.totalElapsedDiv = document.createElement('div');
+
+        this.percentDiv = document.createElement('div');
+
         this.counterGridDiv.appendChild(this.counterDiv);
+        this.counterGridDiv.appendChild(this.totalElapsedDiv);
+        this.counterGridDiv.appendChild(this.percentDiv);
 
         this.nextActivityDiv = document.createElement('div');
         this.nextActivityDiv.id = 'nextActivityDiv';
@@ -329,6 +335,8 @@ SEVENEX.init = function() {
 
         this.updateCounters = function(counters){
             this.counterDiv.innerHTML = counters.timeRemainingInInterval;
+            this.totalElapsedDiv.innerHTML = counters.elapsedTime;
+            this.percentDiv.innerHTML = counters.percentComplete;
         }
     }
 

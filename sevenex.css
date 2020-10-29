@@ -5,6 +5,10 @@ body {
     display: grid;
     grid-template-columns: 1fr 4fr;
 }
+.counterGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
 .activity_name {
 	font-size: 500%;
     background-color: LightSteelBlue;
