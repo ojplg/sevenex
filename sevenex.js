@@ -328,6 +328,10 @@ SEVENEX.init = function() {
         this.situationDiv.appendChild(this.nameDiv);
         this.situationDiv.appendChild(this.counterDiv);
         this.situationDiv.appendChild(this.nextActivityDiv);
+
+        this.updateCounters = function(counters){
+            this.counterDiv.innerHTML = counters.remainingTimeInInterval;
+        }
     }
 
     function TimerScreen(){
@@ -390,6 +394,10 @@ SEVENEX.init = function() {
             this.situationPanel.nameDiv.innerHTML = currentActivity;
             this.situationPanel.nextActivityDiv.innerHTML = nextActivity;
         };
+
+        this.updateCounters = function(counters){
+            this.situationPanel.updateCounters(counters);
+        }
     }
 
     function FormScreen(){
@@ -621,9 +629,9 @@ SEVENEX.init = function() {
             timerScreen.statsPanel.updateStats(progress, program);
 
             var remainingTime = formatTime( progress.timeRemainingUntilNext );
-            var counterDiv = document.getElementById('counterDiv');
-            counterDiv.innerHTML = remainingTime;
-
+            var counters = {};
+            counters.remainingTimeInInterval = remainingTime;    
+            timerScreen.updateCounters(counters);
         }
 
         setTimeout(timerLoop, 25);
