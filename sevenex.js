@@ -310,20 +310,49 @@ SEVENEX.init = function() {
         this.nameDiv.innerHTML = '&nbsp;';
     
         this.counterGridDiv = document.createElement('div');
-        this.counterGridDiv.id = 'counterGrid';         
+        this.counterGridDiv.className = 'counterGrid';         
+
+        this.counterLabelDiv = document.createElement('div');
+        this.counterLabelDiv.className = 'situation_counter_label';
+        this.counterLabelDiv.innerHTML = 'Interval Time Left';
 
         this.counterDiv = document.createElement('div');
         this.counterDiv.id = 'counterDiv';
-        this.counterDiv.className = 'activity_time_left';
+        this.counterDiv.className = 'situation_counter_value';
         this.counterDiv.innerHTML = '&nbsp;';
 
+        this.counterHolderDiv = document.createElement('div');
+        this.counterHolderDiv.appendChild(this.counterLabelDiv);
+        this.counterHolderDiv.appendChild(this.counterDiv);
+        this.counterHolderDiv.className = 'situation_counter_holder';
+
+        this.totalElapsedLabelDiv = document.createElement('div');
+        this.totalElapsedLabelDiv.className = 'situation_counter_label';
+        this.totalElapsedLabelDiv.innerHTML = 'Total Time Elapsed';
+
         this.totalElapsedDiv = document.createElement('div');
+        this.totalElapsedDiv.className = 'situation_counter_value';
+
+        this.totalElapsedHolderDiv = document.createElement('div');
+        this.totalElapsedHolderDiv.appendChild(this.totalElapsedLabelDiv);
+        this.totalElapsedHolderDiv.appendChild(this.totalElapsedDiv);
+        this.totalElapsedHolderDiv.className = 'situation_counter_holder';
+
+        this.percentLabelDiv = document.createElement('div');
+        this.percentLabelDiv.className = 'situation_counter_label';
+        this.percentLabelDiv.innerHTML = 'Completed';
 
         this.percentDiv = document.createElement('div');
+        this.percentDiv.className = 'situation_counter_value';
 
-        this.counterGridDiv.appendChild(this.counterDiv);
-        this.counterGridDiv.appendChild(this.totalElapsedDiv);
-        this.counterGridDiv.appendChild(this.percentDiv);
+        this.percentHolderDiv = document.createElement('div');
+        this.percentHolderDiv.appendChild(this.percentLabelDiv);
+        this.percentHolderDiv.appendChild(this.percentDiv);
+        this.percentHolderDiv.className = 'situation_counter_holder';
+
+        this.counterGridDiv.appendChild(this.counterHolderDiv);
+        this.counterGridDiv.appendChild(this.totalElapsedHolderDiv);
+        this.counterGridDiv.appendChild(this.percentHolderDiv);
 
         this.nextActivityDiv = document.createElement('div');
         this.nextActivityDiv.id = 'nextActivityDiv';
@@ -336,7 +365,7 @@ SEVENEX.init = function() {
         this.updateCounters = function(counters){
             this.counterDiv.innerHTML = counters.timeRemainingInInterval;
             this.totalElapsedDiv.innerHTML = counters.elapsedTime;
-            this.percentDiv.innerHTML = counters.percentComplete;
+            this.percentDiv.innerHTML = counters.percentComplete + "%";
         }
     }
 
@@ -684,7 +713,7 @@ SEVENEX.init = function() {
 
         timerScreen.setActivityNames(currentActivity.name, nextActivity.name);
         let counters = new Counters( progress, program );
-        timerScreen.statsPanel.updateCounters( counters );
+        timerScreen.updateCounters( counters );
         timerScreen.stagesPanel.resetProgress( currentActivity.name );
     }
 

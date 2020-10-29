@@ -13,9 +13,16 @@ body {
 	font-size: 500%;
     background-color: LightSteelBlue;
 }
-.activity_time_left {
+.situation_counter_label {
+    background-color: LightSteelBlue;
+}
+.situation_counter_value {
     font-size: 500%;
     background-color: LightSteelBlue;
+}
+.situation_counter_holder {
+    border-style: solid;
+    border-width: 1px;
 }
 #left_column {
     background-color: LightGrey;
