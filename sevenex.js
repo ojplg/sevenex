@@ -271,16 +271,6 @@ SEVENEX.init = function() {
             valueSpan.innerHTML = value;
         }
 
-        this.renderInitialStatValues = function(program){
-            this.setStatValue("totalTime", 
-                    formatTime(program.totalTime));
-            this.setStatValue("elapsedTime", formatTime(0));
-            this.setStatValue("totalRemainingTime", 
-                    formatTime(program.totalTime));
-            this.setStatValue("percentComplete", "0");
-        }
-
-
         this.totalTimeDiv = this.newStatDiv("totalTime", "Total Time");
         this.programStatsDiv.appendChild(this.totalTimeDiv);
 
@@ -319,17 +309,22 @@ SEVENEX.init = function() {
         this.nameDiv.className = 'activity_name';
         this.nameDiv.innerHTML = '&nbsp;';
     
+        this.counterGridDiv = document.createElement('div');
+        this.counterGridDiv.id = 'counterGrid';         
+
         this.counterDiv = document.createElement('div');
         this.counterDiv.id = 'counterDiv';
         this.counterDiv.className = 'activity_time_left';
         this.counterDiv.innerHTML = '&nbsp;';
+
+        this.counterGridDiv.appendChild(this.counterDiv);
 
         this.nextActivityDiv = document.createElement('div');
         this.nextActivityDiv.id = 'nextActivityDiv';
         this.nextActivityDiv.innerHTML = '&nbsp;';
 
         this.situationDiv.appendChild(this.nameDiv);
-        this.situationDiv.appendChild(this.counterDiv);
+        this.situationDiv.appendChild(this.counterGridDiv);
         this.situationDiv.appendChild(this.nextActivityDiv);
 
         this.updateCounters = function(counters){
@@ -389,7 +384,7 @@ SEVENEX.init = function() {
         actDiv.appendChild(controlDiv);
 
         this.gridDiv = document.createElement('div');
-        this.gridDiv.className = 'grid';
+        this.gridDiv.className = 'topGrid';
         this.gridDiv.appendChild(leftColumnDiv);
         this.gridDiv.appendChild(actDiv);
 
@@ -680,7 +675,7 @@ SEVENEX.init = function() {
         progress.timeRemainingUntilNext = currentActivity.time;
 
         timerScreen.setActivityNames(currentActivity.name, nextActivity.name);
-        let counters = new Counters( program, progress );
+        let counters = new Counters( progress, program );
         timerScreen.statsPanel.updateCounters( counters );
         timerScreen.stagesPanel.resetProgress( currentActivity.name );
     }
@@ -731,10 +726,12 @@ SEVENEX.init = function() {
         program = selectedProgram;
         timerScreen.setActivityNames(program.activities[0].name,
             program.activities[1].name);
-        timerScreen.statsPanel.renderInitialStatValues(program);
         timerScreen.stagesPanel.clear();
         timerScreen.stagesPanel.setStages(program.activityNames);
         progress = new Progress();
+        let counters = new Counters ( progress, program );
+        timerScreen.updateCounters(counters);
+
         timerLoop();
     }
 
