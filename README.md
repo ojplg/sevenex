@@ -11,7 +11,6 @@ Timer for [NYTimes Seven Minute Workout](https://www.nytimes.com/guides/well/act
  * Detect end of workout/add celebration something or other
  * Clear activity pane on workout reload
  * Deactivate/grey-out randomize button after start
- * Stats should be larger/more prominent (possibly repeated)
 
 # And 
 
