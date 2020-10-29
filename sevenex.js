@@ -293,18 +293,21 @@ SEVENEX.init = function() {
         this.percentCompleteDiv = this.newStatDiv("percentComplete", "Percent Complete");
         this.programStatsDiv.appendChild(this.percentCompleteDiv);
 
-        this.updateStats = function( progress, program ){
-            var elapsedTime = formatTime ( progress.totalTimeElapsed );
-            this.elapsedTimeValueSpan.innerHTML = elapsedTime;
-
-            var totalRemainingMillis = program.totalTime - progress.totalTimeElapsed;
-            var totalRemainingTime = formatTime ( totalRemainingMillis );
-            this.totalRemainingTimeValueSpan.innerHTML = totalRemainingTime;
-    
-            var percentComplete = Math.round(100*
-                progress.totalTimeElapsed/program.totalTime);
-            this.percentCompleteValueSpan.innerHTML = percentComplete;
+        this.updateCounters = function( counters ){
+            this.elapsedTimeValueSpan.innerHTML = counters.elapsedTime;
+            this.totalRemainingTimeValueSpan.innerHTML = counters.totalRemainingTime;
+            this.percentCompleteValueSpan.innerHTML = counters.percentComplete;
         }
+    }
+
+    function Counters( progress, program ){
+        this.elapsedTime = formatTime( progress.totalTimeElapsed );
+        let totalRemainingMillis = program.totalTime - progress.totalTimeElapsed;
+        this.totalRemainingTime = formatTime ( totalRemainingMillis );
+        this.percentComplete = Math.round( 100 *
+                progress.totalTimeElapsed/program.totalTime);
+        this.timeRemainingInInterval = 
+                formatTime( progress.timeRemainingUntilNext );
     }
 
     function SituationPanel(){
@@ -330,7 +333,7 @@ SEVENEX.init = function() {
         this.situationDiv.appendChild(this.nextActivityDiv);
 
         this.updateCounters = function(counters){
-            this.counterDiv.innerHTML = counters.remainingTimeInInterval;
+            this.counterDiv.innerHTML = counters.timeRemainingInInterval;
         }
     }
 
@@ -396,6 +399,7 @@ SEVENEX.init = function() {
         };
 
         this.updateCounters = function(counters){
+            this.statsPanel.updateCounters(counters);
             this.situationPanel.updateCounters(counters);
         }
     }
@@ -625,12 +629,8 @@ SEVENEX.init = function() {
                 timerScreen.setActivityNames(activity.name,nextActivityName);
                 
             }
-    
-            timerScreen.statsPanel.updateStats(progress, program);
-
-            var remainingTime = formatTime( progress.timeRemainingUntilNext );
-            var counters = {};
-            counters.remainingTimeInInterval = remainingTime;    
+        
+            let counters = new Counters(progress, program);
             timerScreen.updateCounters(counters);
         }
 
@@ -680,7 +680,8 @@ SEVENEX.init = function() {
         progress.timeRemainingUntilNext = currentActivity.time;
 
         timerScreen.setActivityNames(currentActivity.name, nextActivity.name);
-        timerScreen.statsPanel.updateStats( program, progress );
+        let counters = new Counters( program, progress );
+        timerScreen.statsPanel.updateCounters( counters );
         timerScreen.stagesPanel.resetProgress( currentActivity.name );
     }
 
