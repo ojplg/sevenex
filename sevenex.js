@@ -284,6 +284,7 @@ SEVENEX.init = function() {
         this.programStatsDiv.appendChild(this.percentCompleteDiv);
 
         this.updateCounters = function( counters ){
+            this.totalTimeValueSpan.innerHTML = counters.totalTime;
             this.elapsedTimeValueSpan.innerHTML = counters.elapsedTime;
             this.totalRemainingTimeValueSpan.innerHTML = counters.totalRemainingTime;
             this.percentCompleteValueSpan.innerHTML = counters.percentComplete;
@@ -291,6 +292,7 @@ SEVENEX.init = function() {
     }
 
     function Counters( progress, program ){
+        this.totalTime = formatTime( program.totalTime );
         this.elapsedTime = formatTime( progress.totalTimeElapsed );
         let totalRemainingMillis = program.totalTime - progress.totalTimeElapsed;
         this.totalRemainingTime = formatTime ( totalRemainingMillis );
