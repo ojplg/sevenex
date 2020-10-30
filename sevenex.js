@@ -500,7 +500,7 @@ SEVENEX.init = function() {
             intervalNameSpan.appendChild(intervalNameInput);
 
             let intervalTimeLabel = document.createElement('label');
-            intervalTimeLabel.innerHTML = 'Interval Time';
+            intervalTimeLabel.innerHTML = 'Time';
             intervalTimeLabel['for'] = 'intervalTimeInput' + count;
             let intervalTimeInput = document.createElement('select');
             intervalTimeInput.id = 'intervalTimeInput' + count;
