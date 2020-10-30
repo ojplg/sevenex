@@ -547,10 +547,7 @@ SEVENEX.init = function() {
             intervals.push(anotherInterval);
             intervalsDiv.appendChild(anotherInterval.intervalDiv);
         }
-        let lightrule = document.createElement('hr');
-        lightrule.className = 'lightrule';
         let moreDiv = document.createElement('div');
-        moreDiv.appendChild(lightrule);
         moreDiv.appendChild(moreButton);
 
         // save
