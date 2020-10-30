@@ -27,3 +27,5 @@ Running the server is a bit of a pain. You need to set up a web-server
 to serve the html, css, and js, since otherwise CORs problems will 
 stop the page loading things from the web server. My suggestion:
 Don't bother.
+
+I admit, the whole thing is a gigantic mess.
