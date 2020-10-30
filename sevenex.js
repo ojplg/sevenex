@@ -18,6 +18,7 @@ SEVENEX.init = function() {
 
     var timerScreen;
     var contentDiv;
+    var topNavControlsSpan;
 
     var defaultWorkout = {
         "name":"Default",
@@ -438,16 +439,17 @@ SEVENEX.init = function() {
         }
     }
 
-    function FormScreen(){
-        
-        // header data
+    function FormScreenTopNavControls(){
         let returnButton = document.createElement('button');
         returnButton.id = 'returnButton';
         returnButton.innerHTML = 'Return';
         returnButton.onclick = function(){ renderTimerScreen(); }
-    
-        let formHeaderDiv = document.createElement('div');
-        formHeaderDiv.appendChild(returnButton);
+        
+        this.controls = document.createElement('span');
+        this.controls.appendChild(returnButton);
+    }
+
+    function FormScreen(){
         
         // form elements
 
@@ -592,33 +594,42 @@ SEVENEX.init = function() {
 
         // overall div
         this.formScreenDiv = document.createElement('div');
-        this.formScreenDiv.appendChild(formHeaderDiv);
-        this.formScreenDiv.appendChild(document.createElement('hr'));
         this.formScreenDiv.appendChild(formPanelDiv);
     }   
 
-    var drawScreen = function(){
-        console.log("Sevenex initializing");
-
-        let topDiv = document.createElement('div');
-        let topTitleSpan = document.createElement('span');
-        topTitleSpan.id = 'topTitle';
-        topTitleSpan.innerHTML = 
-            "<b>Sevenex.</b> An application for quick interval workouts.";
-        topDiv.appendChild(topTitleSpan);
-        let selectWorkoutSpan = document.createElement('span');
-        selectWorkoutSpan.id = 'selectWorkout';
+    function MainScreenTopNavButtons(){
         let selectWorkoutSelector = document.createElement('select');
         selectWorkoutSelector.id = 'selectWorkoutSelector';
         selectWorkoutSelector.addEventListener('change', selectWorkoutCallback);
-        selectWorkoutSpan.appendChild(selectWorkoutSelector);
-        topDiv.appendChild(selectWorkoutSpan);
+        
         let newWorkoutButton = document.createElement('button');
         newWorkoutButton.id = 'newWorkoutButton';
         newWorkoutButton.innerHTML = 'New';
         newWorkoutButton.onclick = renderFormScreen;
-        selectWorkoutSpan.appendChild(newWorkoutButton);
 
+        this.controls = document.createElement('span');
+        this.controls.appendChild(selectWorkoutSelector);
+        this.controls.appendChild(newWorkoutButton);
+   }
+
+    var drawScreen = function(){
+        console.log("Sevenex initializing");
+
+        let topTitleSpan = document.createElement('span');
+        topTitleSpan.id = 'topTitle';
+        topTitleSpan.innerHTML = 
+            "<b>Sevenex.</b> An application for quick interval workouts.";
+        
+        topNavControlsSpan = document.createElement('span');
+        topNavControlsSpan.className = 'top_nav_controls';
+        
+        let topNavButtons = new MainScreenTopNavButtons();
+        topNavControlsSpan.appendChild(topNavButtons.controls);
+
+        let topDiv = document.createElement('div');
+        topDiv.appendChild(topTitleSpan);
+        topDiv.appendChild(topNavControlsSpan);    
+    
         let creditDiv = document.createElement('div');
         creditDiv.id = 'creditDiv';
         creditDiv.innerHTML = 
@@ -751,14 +762,22 @@ SEVENEX.init = function() {
 
     var renderFormScreen = function() {
         contentDiv.innerHTML = '';
+        topNavControlsSpan.innerHTML = '';
         let formScreen = new FormScreen();
         contentDiv.appendChild(formScreen.formScreenDiv);
+        let formScreenTopNavControls = new FormScreenTopNavControls();
+        topNavControlsSpan.appendChild(formScreenTopNavControls.controls);
     }
 
     var renderTimerScreen = function() {
+        loadRemoteWorkouts();
         contentDiv.innerHTML = ''; 
+        topNavControlsSpan.innerHTML = '';
         timerScreen = new TimerScreen();
         contentDiv.appendChild(timerScreen.gridDiv);
+
+        let topNavButtons = new MainScreenTopNavButtons();
+        topNavControlsSpan.appendChild(topNavButtons.controls);
 
         setActiveProgram(defaultProgram);
     }
@@ -777,7 +796,6 @@ SEVENEX.init = function() {
     }
 
     var start = function(){
-        loadRemoteWorkouts();
         drawScreen();
         renderTimerScreen();
     }
