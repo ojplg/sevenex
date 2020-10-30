@@ -63,4 +63,15 @@ hr.lightrule {
     width: 75%;
     color: LightGrey;
 }
-    
+div.form_interval_container {
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 12px;
+    border-color: LightGrey;
+    display: inline-block;
+    padding: 8px;
+}    
+div.form_interval {
+    padding: 4px;
+}
+

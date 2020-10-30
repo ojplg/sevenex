@@ -488,7 +488,7 @@ SEVENEX.init = function() {
 
             // interval 
             let intervalHeadingSpan = document.createElement('span');
-            intervalHeadingSpan.innerHTML = 'interval:&nbsp;';
+            intervalHeadingSpan.innerHTML = 'Interval.&nbsp;';
 
             let intervalNameLabel = document.createElement('label');
             intervalNameLabel.innerHTML = 'Name';
@@ -515,14 +515,16 @@ SEVENEX.init = function() {
             intervalTimeSpan.appendChild(intervalTimeLabel);
             intervalTimeSpan.appendChild(intervalTimeInput);
 
-            let intervalDiv = document.createElement('div');
-            let lightrule = document.createElement('hr');
-            lightrule.className = 'lightrule';
-            intervalDiv.appendChild(lightrule);
-            intervalDiv.appendChild(intervalHeadingSpan);
-            intervalDiv.appendChild(intervalNameSpan);
-            intervalDiv.appendChild(intervalTimeSpan);
+            let containerDiv = document.createElement('div');
+            containerDiv.className = 'form_interval_container';
+            containerDiv.appendChild(intervalHeadingSpan);
+            containerDiv.appendChild(intervalNameSpan);
+            containerDiv.appendChild(intervalTimeSpan);
         
+            let intervalDiv = document.createElement('div');
+            intervalDiv.className = 'form_interval';
+            intervalDiv.appendChild(containerDiv);
+
             this.intervalDiv = intervalDiv;
             this.nameInput = intervalNameInput;
             this.timeInput = intervalTimeInput;
