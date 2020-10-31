@@ -456,9 +456,11 @@ SEVENEX.init = function() {
         // name of workout
         let nameLabel = document.createElement('label');
         nameLabel.innerHTML = 'Name';
+        nameLabel.className = 'new_form';
         nameLabel['for'] = 'nameInput';
         let nameInput = document.createElement('input');
         nameInput.id = 'nameInput';
+        nameInput.className = 'new_form';
         let nameDiv = document.createElement('div');
         nameDiv.appendChild(nameLabel);
         nameDiv.appendChild(nameInput);
@@ -467,6 +469,7 @@ SEVENEX.init = function() {
         let restTimeLabel = document.createElement('label');
         restTimeLabel.innerHTML = 'Rest Time';
         restTimeLabel['for'] = 'restTimeInput';
+        restTimeLabel.className = 'new_form';
         let restTimeInput = document.createElement('select');
         restTimeInput.id = 'restTimeInput';
         let restTimeValues = [ 5, 10, 15, 20 ];
@@ -475,6 +478,9 @@ SEVENEX.init = function() {
             option.value = restTimeValues[idx];
             option.innerHTML = restTimeValues[idx];
             restTimeInput.appendChild(option);
+            if( restTimeValues[idx] == 10 ){
+                option.selected = 'selected';
+            }
         }
         let restTimeDiv = document.createElement('div');
         restTimeDiv.appendChild(restTimeLabel);
@@ -483,7 +489,8 @@ SEVENEX.init = function() {
         var intervalCount = 0;
         var intervals = [];
     
-        let intervalTimeValues = [ 15, 30, 45, 60 ];
+        let intervalTimeValues = [ 5, 10, 15, 20, 25, 30, 35, 40, 45, 
+                                   50, 55, 60, 65, 70, 75, 80, 85, 90 ];
     
         function Interval(count){
             this.count = count;
@@ -511,6 +518,9 @@ SEVENEX.init = function() {
                 option.value = intervalTimeValues[idx];
                 option.innerHTML = intervalTimeValues[idx];
                 intervalTimeInput.appendChild(option);
+                if( intervalTimeValues[idx] == 30 ){
+                    option.selected = 'selected';
+                }
             }
 
             let intervalTimeSpan = document.createElement('span');
@@ -587,6 +597,7 @@ SEVENEX.init = function() {
         formPanelDiv.appendChild(restTimeDiv);
         formPanelDiv.appendChild(intervalsDiv);
         formPanelDiv.appendChild(moreDiv);
+        formPanelDiv.appendChild(document.createElement('br'));
         formPanelDiv.appendChild(saveDiv);
 
         // overall div

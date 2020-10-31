@@ -84,3 +84,10 @@ button {
     margin-right: 2px;
     margin-left: 2px;
 }
+label.new_form {
+    width: 6em;
+    display: inline-block;
+}
+input.new_form {
+    width: 20em;
+} 
