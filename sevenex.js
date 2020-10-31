@@ -584,8 +584,9 @@ SEVENEX.init = function() {
             console.log('saving: ' + workoutJson);
 
             let requester = new XMLHttpRequest();
-            // FIXME: Something needed here.
-            //requester.addEventListener("load", workoutsLoaded);
+            // FIXME: Something needed here. - Should check the
+            // results of the save
+            requester.addEventListener("load", renderTimerScreen);
             requester.open("POST", "/sevenex/workouts/save");
             requester.send(workoutJson);
         };

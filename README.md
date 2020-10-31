@@ -7,7 +7,7 @@ Timer for [NYTimes Seven Minute Workout](https://www.nytimes.com/guides/well/act
    * A way to edit workouts (maybe copy)
    * Validation of submission (web side)
    * Validation (serverside)
-   * Respond to server reply
+   * Check server response before exiting form
  * Clear activity pane on workout reload
  * Deactivate/grey-out randomize button after start
 
