@@ -107,7 +107,7 @@ SEVENEX.init = function() {
                     return index;
                 }
             }
-            return p.activities.length-1;
+            return p.activities.length;
         }
 
         p.nextNonRestActivity = function(index){
@@ -671,24 +671,30 @@ SEVENEX.init = function() {
                 }
                 var activity = program.activities[progress.index];
                 var nextActivity = program.nextNonRestActivity(progress.index);
-                if ( ! activity.isRest ){
-                    timerScreen.stagesPanel.setCurrentActivity(activity.name);
+                var activityName;
+                if ( activity == null ){
+                    progress.running = false;     
+                    activityName = 'Done';
                 } else {
-                    timerScreen.stagesPanel.setCurrentActivity(nextActivity.name);
+                    activityName = activity.name;
+                    if ( ! activity.isRest ){
+                        timerScreen.stagesPanel.setCurrentActivity(activity.name);
+                    } else {
+                        timerScreen.stagesPanel.setCurrentActivity(nextActivity.name);
+                    }
+                    progress.timeRemainingUntilNext = activity.time;
                 }
-                progress.timeRemainingUntilNext = activity.time;
                 
                 var nextActivityName = nextActivity ?
-                    'Next:&nbsp;' + nextActivity.name : '';
+                    'Next:&nbsp;' + nextActivity.name : '&nbsp;';
 
-                timerScreen.setActivityNames(activity.name,nextActivityName);
-                
+                timerScreen.setActivityNames(activityName,nextActivityName);
             }
         
             let counters = new Counters(progress, program);
             timerScreen.updateCounters(counters);
-        }
 
+        }
         setTimeout(timerLoop, 25);
     }
 
