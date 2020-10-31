@@ -1,5 +1,12 @@
 # sevenex
-Timer for [NYTimes Seven Minute Workout](https://www.nytimes.com/guides/well/activity/the-7-minute-workout)
+
+Sevenex is a javascript program for timing interval-based workouts.
+Sevenex allows you to create your own workouts and save them.
+(Though that code is pretty sucky. Remember our motto: patches welcome.)
+
+[Try it out.](https://hrorm.org/sevenex/)
+
+The inspiration [NYTimes Seven Minute Workout](https://www.nytimes.com/guides/well/activity/the-7-minute-workout)
 
 # TODO
 
