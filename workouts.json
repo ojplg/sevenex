@@ -1,35 +1,5 @@
 [
   {
-    "name": "Oliver",
-    "activities": [
-      {
-        "name": "Jumping Jacks",
-        "time": 90,
-        "isRest": false
-      },
-      {
-        "name": "Rest",
-        "time": 15,
-        "isRest": true
-      },
-      {
-        "name": "Squats",
-        "time": 60,
-        "isRest": false
-      },
-      {
-        "name": "Rest",
-        "time": 15,
-        "isRest": true
-      },
-      {
-        "name": "Push Ups",
-        "time": 45,
-        "isRest": false
-      }
-    ]
-  },
-  {
     "name": "Louisa",
     "activities": [
       {
