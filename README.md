@@ -9,8 +9,8 @@ Timer for [NYTimes Seven Minute Workout](https://www.nytimes.com/guides/well/act
    * Validation (serverside)
    * Check server response before exiting form
    * Do not overwrite repository workouts.json on server
- * Clear activity pane on workout reload
  * Deactivate/grey-out randomize button after start
+ * Check rewind works on corner cases
 
 # And 
 

@@ -807,6 +807,9 @@ SEVENEX.init = function() {
         let counters = new Counters ( progress, program );
         timerScreen.updateCounters(counters);
 
+        var progressButton = document.getElementById('progressButton');
+        progressButton.innerHTML = 'Start';
+
         timerLoop();
     }
 
