@@ -6,7 +6,7 @@ Sevenex allows you to create your own workouts and save them.
 
 [Try it out.](https://hrorm.org/sevenex/)
 
-The inspiration [NYTimes Seven Minute Workout](https://www.nytimes.com/guides/well/activity/the-7-minute-workout)
+The inspiration was the [NYTimes Seven Minute Workout](https://www.nytimes.com/guides/well/activity/the-7-minute-workout)
 
 # TODO
 
