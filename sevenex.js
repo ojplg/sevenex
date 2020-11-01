@@ -231,7 +231,7 @@ SEVENEX.init = function() {
         }
 
         this.complete = function(){
-            this.stagesDiv.children[this.currentIndex].className = 'completeActivity';
+            this.stagesDiv.children[this.currentIndex].className = 'completedActivity';
         }
     }
 
