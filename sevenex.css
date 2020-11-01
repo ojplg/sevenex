@@ -27,13 +27,10 @@ body {
 #left_column {
     background-color: LightGrey;
 }
-.progress_button {
+button.big {
     background-color: SeaGreen;
     font-size: 400%;
-}
-.rewind_button {
-    background-color: SeaGreen;
-    font-size: 400%;
+    width: 5em;
 }
 #creditDiv {
     position: absolute;

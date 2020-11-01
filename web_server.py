@@ -26,28 +26,31 @@ class MyServer(BaseHTTPRequestHandler):
         json.dump( workouts, workouts_file )
 
     def do_GET(self):
-        print("GET REQUESTED: " + self.path)        
+        print("GET : " + self.path)        
         self.send_response(200)
         self.send_header("Content-type", "application/json")
         self.end_headers()
         workouts_bytes = self.readWorkoutsFileBytes()
         self.wfile.write(workouts_bytes)
 
+    def save(self):
+        content_length = int(self.headers['Content-Length'])
+        body = self.rfile.read(content_length)
+        print("save content: " + str(body))
+        existingWorkouts = self.readWorkoutsFileJson()
+        newWorkout = json.loads(body.decode(encoding='utf-8'))
+        existingWorkouts.append(newWorkout)
+        self.saveWorkoutsFile(existingWorkouts)
+        print("SAVED WORKOUTS")
+        self.send_response(200)
+        self.send_header("Content-type", "application/json")
+        self.end_headers()
+        self.wfile.write(b'')
+
     def do_POST(self):
-        print("POST REQUESTED " + self.path)
+        print("POST " + self.path)
         if self.path == '/save':
-            content_length = int(self.headers['Content-Length'])
-            body = self.rfile.read(content_length)
-            print("POST BODY " + str(body))
-            existingWorkouts = self.readWorkoutsFileJson()
-            newWorkout = json.loads(body.decode(encoding='utf-8'))
-            existingWorkouts.append(newWorkout)
-            self.saveWorkoutsFile(existingWorkouts)
-            print("SAVED WORKOUTS")
-            self.send_response(200)
-            self.send_header("Content-type", "application/json")
-            self.end_headers()
-            self.wfile.write(b'')
+            self.save()
         else: 
             self.send_response(404)
             self.end_headers()

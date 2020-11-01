@@ -402,13 +402,13 @@ SEVENEX.init = function() {
         progressButton.value = 'progress';
         progressButton.innerHTML = 'Start';
         progressButton.type = 'button';
-        progressButton.className = 'progress_button';
+        progressButton.className = 'big';
         progressButton.onclick = function(){ progress.toggle();  }
 
         let rewindButton = document.createElement('button');
         rewindButton.id = 'rewindButton';
         rewindButton.innerHTML = 'Rewind';
-        rewindButton.className = 'rewind_button';
+        rewindButton.className = 'big';
         rewindButton.onclick = rewind;
 
         let controlDiv = document.createElement('div');
