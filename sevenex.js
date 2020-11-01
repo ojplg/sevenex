@@ -203,6 +203,8 @@ SEVENEX.init = function() {
 
         this.clear = function(){ this.stagesDiv.innerHTML = ''; }
 
+        this.currentIndex = 0;
+
         this.setStages = function(activityNames){
             var index = 1;
             activityNames.forEach( name => {
@@ -212,36 +214,24 @@ SEVENEX.init = function() {
                 this.stagesDiv.appendChild(actDiv);
                 this[name] = actDiv;
                 actDiv.activityName = name;
-            });   
+            });
+            this.stagesDiv.children[0].className = 'currentActivity';
         }
 
-        this.setCurrentActivity = function(activityName){
-            this[activityName].className = "currentActivity";
+        this.advance = function(){
+            this.stagesDiv.children[this.currentIndex].className = 'completedActivity';
+            this.currentIndex++;
+            this.stagesDiv.children[this.currentIndex].className = 'currentActivity';
         }
 
-        this.setCompletedActivity = function(activityName){
-            this[activityName].className = "completedActivity";
+        this.rewind = function(){
+            this.stagesDiv.children[this.currentIndex].className = 'upcoming';
+            this.currentIndex--;
+            this.stagesDiv.children[this.currentIndex].className = 'currentActivity';
         }
 
-        this.resetProgress = function(currentActivityName){
-            var reachedCurrent = false;
-            let children = this.stagesDiv.children;
-            for ( var i=0; i < children.length ; i++ ){
-                var child = children[i];
-                if( child.activityName == currentActivityName ){
-                    console.log("matched activity " + child.activityName 
-                            + " vs " + currentActivityName );
-                    child.className = "currentActivity";                   
-                    reachedCurrent = true;
-                } else {
-                    if (reachedCurrent ) {
-                        child.className = "upcoming";
-                    } else {
-                        child.className = "completedActivity";
-                    }
-                }
-            }
-            
+        this.complete = function(){
+            this.stagesDiv.children[this.currentIndex].className = 'completeActivity';
         }
     }
 
@@ -667,22 +657,18 @@ SEVENEX.init = function() {
                 console.log("Advanced index to " + progress.index);
 
                 let priorActivity = program.priorNonRestActivity(progress.index);
-                if ( priorActivity != null ) {
-                    timerScreen.stagesPanel.setCompletedActivity(priorActivity.name);
-                }
                 var activity = program.activities[progress.index];
                 var nextActivity = program.nextNonRestActivity(progress.index);
                 var activityName;
                 if ( activity == null ){
                     progress.running = false;     
                     activityName = 'Done';
+                    timerScreen.stagesPanel.complete();
                 } else {
                     activityName = activity.name;
-                    if ( ! activity.isRest ){
-                        timerScreen.stagesPanel.setCurrentActivity(activity.name);
-                    } else {
-                        timerScreen.stagesPanel.setCurrentActivity(nextActivity.name);
-                    }
+                    if ( activity.isRest ){
+                        timerScreen.stagesPanel.advance();
+                    } 
                     progress.timeRemainingUntilNext = activity.time;
                 }
                 
@@ -744,7 +730,7 @@ SEVENEX.init = function() {
         timerScreen.setActivityNames(currentActivity.name, nextActivity.name);
         let counters = new Counters( progress, program );
         timerScreen.updateCounters( counters );
-        timerScreen.stagesPanel.resetProgress( currentActivity.name );
+        timerScreen.stagesPanel.rewind();
     }
 
     var randomizeActivities = function(){
