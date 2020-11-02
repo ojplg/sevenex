@@ -41,7 +41,13 @@ class MyServer(BaseHTTPRequestHandler):
         newWorkout = json.loads(body.decode(encoding='utf-8'))
         if ('oldName' in newWorkout):
             print("Updating " + newWorkout['oldName'])
-        existingWorkouts.append(newWorkout)
+            oldName = newWorkout['oldName']
+            del newWorkout['oldNameo']
+            # FIXME this will not work, file is a list not a map
+            del existingWorkouts[oldName]
+            existingWorkouts.append 
+        else:
+            existingWorkouts.append(newWorkout)
         self.saveWorkoutsFile(existingWorkouts)
         print("SAVED WORKOUTS")
         self.send_response(200)
