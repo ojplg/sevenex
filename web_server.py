@@ -39,6 +39,8 @@ class MyServer(BaseHTTPRequestHandler):
         print("save content: " + str(body))
         existingWorkouts = self.readWorkoutsFileJson()
         newWorkout = json.loads(body.decode(encoding='utf-8'))
+        if ('oldName' in newWorkout):
+            print("Updating " + newWorkout['oldName'])
         existingWorkouts.append(newWorkout)
         self.saveWorkoutsFile(existingWorkouts)
         print("SAVED WORKOUTS")

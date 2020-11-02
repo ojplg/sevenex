@@ -546,6 +546,7 @@ SEVENEX.init = function() {
                         activity.name, activity.time);
                     intervalsDiv.appendChild(nextInterval.intervalDiv);
                     intervalCount++;
+                    intervals.push(nextInterval);
                 }
             }
         } else {
