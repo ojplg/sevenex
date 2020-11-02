@@ -441,6 +441,8 @@ SEVENEX.init = function() {
 
     function FormScreen(workout){
         
+        console.log("new form screen for " + workout);
+
         // name of workout
         let nameLabel = document.createElement('label');
         nameLabel.innerHTML = 'Name';
@@ -497,7 +499,9 @@ SEVENEX.init = function() {
             intervalNameLabel['for'] = 'intervalNameInput' + count;
             let intervalNameInput = document.createElement('input');
             intervalNameInput.id = 'intervalNameInput' + count;
-            intervalNameInput.value = name;
+            if (name) {
+                intervalNameInput.value = name;
+            }
             let intervalNameSpan = document.createElement('span');
             intervalNameSpan.appendChild(intervalNameLabel);
             intervalNameSpan.appendChild(intervalNameInput);
@@ -633,7 +637,10 @@ SEVENEX.init = function() {
         let newWorkoutButton = document.createElement('button');
         newWorkoutButton.id = 'newWorkoutButton';
         newWorkoutButton.innerHTML = 'New';
-        newWorkoutButton.onclick = renderFormScreen;
+        newWorkoutButton.onclick =
+            function () {
+                renderFormScreen(null);
+            }
 
         this.controls = document.createElement('span');
         this.controls.appendChild(selectWorkoutSelector);

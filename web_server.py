@@ -33,6 +33,13 @@ class MyServer(BaseHTTPRequestHandler):
         workouts_bytes = self.readWorkoutsFileBytes()
         self.wfile.write(workouts_bytes)
 
+    def remove(self, workouts, name):
+        filtered = []
+        for idx, workout in enumerate(workouts):
+            if workout['name'] != name:
+                filtered.append(workout)
+        return filtered
+
     def save(self):
         content_length = int(self.headers['Content-Length'])
         body = self.rfile.read(content_length)
@@ -42,12 +49,9 @@ class MyServer(BaseHTTPRequestHandler):
         if ('oldName' in newWorkout):
             print("Updating " + newWorkout['oldName'])
             oldName = newWorkout['oldName']
-            del newWorkout['oldNameo']
-            # FIXME this will not work, file is a list not a map
-            del existingWorkouts[oldName]
-            existingWorkouts.append 
-        else:
-            existingWorkouts.append(newWorkout)
+            existingWorkouts = self.remove(existingWorkouts, oldName)
+            del newWorkout['oldName']
+        existingWorkouts.append(newWorkout)
         self.saveWorkoutsFile(existingWorkouts)
         print("SAVED WORKOUTS")
         self.send_response(200)
