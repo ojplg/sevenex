@@ -571,9 +571,9 @@ SEVENEX.init = function() {
         let saveButton = document.createElement('button');
         saveButton.innerHTML = 'Save';    
         saveButton.onclick = function(){ 
-            let workout = {};
-            workout.name = nameInput.value;
-            workout.activities = 
+            let workoutSubmission = {};
+            workoutSubmission.name = nameInput.value;
+            workoutSubmission.activities = 
                 intervals.flatMap(function (interval) 
                     { 
                         let i = {};
@@ -587,7 +587,10 @@ SEVENEX.init = function() {
                         return [ r, i ]
                     });
     
-            let workoutJson = JSON.stringify(workout);
+            if( workout ) {
+                workoutSubmission.oldName = workout.name
+            }
+            let workoutJson = JSON.stringify(workoutSubmission);
             console.log('saving: ' + workoutJson);
 
             let requester = new XMLHttpRequest();
