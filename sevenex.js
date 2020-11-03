@@ -526,11 +526,15 @@ SEVENEX.init = function() {
             intervalTimeSpan.appendChild(intervalTimeLabel);
             intervalTimeSpan.appendChild(intervalTimeInput);
 
+            this.intervalDeleteAnchor = document.createElement('a');
+            this.intervalDeleteAnchor.innerHTML = '&nbsp;&#10060';
+
             let containerDiv = document.createElement('div');
             containerDiv.className = 'form_interval_container';
             containerDiv.appendChild(intervalHeadingSpan);
             containerDiv.appendChild(intervalNameSpan);
             containerDiv.appendChild(intervalTimeSpan);
+            containerDiv.appendChild(this.intervalDeleteAnchor);
         
             let intervalDiv = document.createElement('div');
             intervalDiv.className = 'form_interval';
@@ -539,6 +543,7 @@ SEVENEX.init = function() {
             this.intervalDiv = intervalDiv;
             this.nameInput = intervalNameInput;
             this.timeInput = intervalTimeInput;
+
         }    
 
         let intervalsDiv = document.createElement('div');
@@ -551,6 +556,11 @@ SEVENEX.init = function() {
                     intervalsDiv.appendChild(nextInterval.intervalDiv);
                     intervalCount++;
                     intervals.push(nextInterval);
+                    nextInterval.intervalDeleteAnchor.onclick = function(){
+                        console.log("deleting " + nextInterval.count);
+                        intervalsDiv.removeChild(nextInterval.intervalDiv);
+                        intervals.splice(nextInterval.count, 1);
+                    };
                 }
             }
         } else {
