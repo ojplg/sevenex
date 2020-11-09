@@ -13,8 +13,6 @@ The inspiration was the [NYTimes Seven Minute Workout](https://www.nytimes.com/g
  * CRUD work
    * Validation of submission (web side)
    * Validation (serverside)
-   * Block edits of default workout
-   * delete interval
    * Check server response before exiting form
    * Do not overwrite repository workouts.json on server
  * Deactivate/grey-out randomize button after start
