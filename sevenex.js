@@ -192,7 +192,7 @@ SEVENEX.init = function() {
 
     var selectWorkoutCallback = function(evt){
         console.log('selected ' + evt.target.value);
-        var selectedProgram = loadedWorkouts.find( program =>
+        let selectedProgram = loadedWorkouts.find( program =>
             program.name == evt.target.value);
         setActiveProgram(selectedProgram);
     }
@@ -615,7 +615,11 @@ SEVENEX.init = function() {
             let requester = new XMLHttpRequest();
             // FIXME: Something needed here. - Should check the
             // results of the save
-            requester.addEventListener("load", renderTimerScreen);
+            requester.addEventListener("load", 
+                () => { 
+                    console.log("Saved!");
+                    renderTimerScreen(workoutSubmission.name); 
+            });
             requester.open("POST", "/sevenex/workouts/save");
             requester.send(workoutJson);
         };
@@ -825,7 +829,7 @@ SEVENEX.init = function() {
         }
     }
 
-    var renderTimerScreen = function() {
+    var renderTimerScreen = function(workoutName) {
         loadRemoteWorkouts();
         contentDiv.innerHTML = ''; 
         topNavControlsSpan.innerHTML = '';
@@ -835,7 +839,13 @@ SEVENEX.init = function() {
         let topNavButtons = new MainScreenTopNavButtons();
         topNavControlsSpan.appendChild(topNavButtons.controls);
 
-        setActiveProgram(defaultProgram);
+        if ( workoutName == null ){
+            setActiveProgram(defaultProgram);
+        } else {
+            let selectedProgram = loadedWorkouts.find( program =>
+                program.name == workoutName);
+            setActiveProgram(selectedProgram);
+        }
     }
 
     var setActiveProgram = function(selectedProgram){
