@@ -559,7 +559,8 @@ SEVENEX.init = function() {
                     nextInterval.intervalDeleteAnchor.onclick = function(){
                         console.log("deleting " + nextInterval.count);
                         intervalsDiv.removeChild(nextInterval.intervalDiv);
-                        intervals.splice(nextInterval.count, 1);
+                        //intervals.splice(nextInterval.count, 1);
+                        nextInterval.removed = true;
                     };
                 }
             }
@@ -591,6 +592,9 @@ SEVENEX.init = function() {
             workoutSubmission.activities = 
                 intervals.flatMap(function (interval) 
                     { 
+                        if( interval.removed ){
+                            return [];
+                        }
                         let i = {};
                         i.time = interval.timeInput.value;
                         i.name = interval.nameInput.value;
@@ -809,12 +813,16 @@ SEVENEX.init = function() {
     }
 
     var renderFormScreen = function(workout) {
-        contentDiv.innerHTML = '';
-        topNavControlsSpan.innerHTML = '';
-        let formScreen = new FormScreen(workout);
-        contentDiv.appendChild(formScreen.formScreenDiv);
-        let formScreenTopNavControls = new FormScreenTopNavControls();
-        topNavControlsSpan.appendChild(formScreenTopNavControls.controls);
+        if ( workout != null && workout.name == 'Default' ){
+            alert("Cannot edit the default workout.");
+        } else {
+            contentDiv.innerHTML = '';
+            topNavControlsSpan.innerHTML = '';
+            let formScreen = new FormScreen(workout);
+            contentDiv.appendChild(formScreen.formScreenDiv);
+            let formScreenTopNavControls = new FormScreenTopNavControls();
+            topNavControlsSpan.appendChild(formScreenTopNavControls.controls);
+        }
     }
 
     var renderTimerScreen = function() {
