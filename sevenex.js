@@ -53,7 +53,7 @@ SEVENEX.init = function() {
        ]
     };
    
-    var loadRemoteWorkouts = function(){
+    var loadRemoteWorkouts = function(workoutName){
 
         var workoutsLoaded = function(){
             console.log("WORKOUTS LOADED");
@@ -61,6 +61,14 @@ SEVENEX.init = function() {
             loadedWorkouts = workoutsList.map( a => workoutToProgram(a, 1000));
             loadedWorkouts.unshift(defaultProgram);
             populateWorkoutSelector();
+        
+            if ( workoutName == null ){
+                setActiveProgram(defaultProgram);
+            } else {
+                let selectedProgram = loadedWorkouts.find( program =>
+                    program.name == workoutName);
+                setActiveProgram(selectedProgram);
+            }
         }
 
         let requester = new XMLHttpRequest();
@@ -617,7 +625,7 @@ SEVENEX.init = function() {
             // results of the save
             requester.addEventListener("load", 
                 () => { 
-                    console.log("Saved!");
+                    console.log("Saved!" + requester.responseText);
                     renderTimerScreen(workoutSubmission.name); 
             });
             requester.open("POST", "/sevenex/workouts/save");
@@ -830,7 +838,8 @@ SEVENEX.init = function() {
     }
 
     var renderTimerScreen = function(workoutName) {
-        loadRemoteWorkouts();
+        console.log("rendering timer screen for " + workoutName);
+        loadRemoteWorkouts(workoutName);
         contentDiv.innerHTML = ''; 
         topNavControlsSpan.innerHTML = '';
         timerScreen = new TimerScreen();
@@ -839,16 +848,10 @@ SEVENEX.init = function() {
         let topNavButtons = new MainScreenTopNavButtons();
         topNavControlsSpan.appendChild(topNavButtons.controls);
 
-        if ( workoutName == null ){
-            setActiveProgram(defaultProgram);
-        } else {
-            let selectedProgram = loadedWorkouts.find( program =>
-                program.name == workoutName);
-            setActiveProgram(selectedProgram);
-        }
-    }
+   }
 
     var setActiveProgram = function(selectedProgram){
+        console.log("setting active program " + selectedProgram);
         program = selectedProgram;
         timerScreen.setActivityNames(program.activities[0].name,
             program.activities[1].name);

@@ -15,7 +15,6 @@ The inspiration was the [NYTimes Seven Minute Workout](https://www.nytimes.com/g
    * Validation (serverside)
    * Check server response before exiting form
    * Do not overwrite repository workouts.json on server
-   * Correctly load new version of workout after save
  * Deactivate/grey-out randomize button after start
  * Check rewind works on corner cases
 

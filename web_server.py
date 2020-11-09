@@ -57,7 +57,7 @@ class MyServer(BaseHTTPRequestHandler):
         self.send_response(200)
         self.send_header("Content-type", "application/json")
         self.end_headers()
-        self.wfile.write(b'')
+        self.wfile.write(b'Good save happened')
 
     def do_POST(self):
         print("POST " + self.path)
