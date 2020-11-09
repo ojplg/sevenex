@@ -60,15 +60,15 @@ SEVENEX.init = function() {
             workoutsList = JSON.parse(this.responseText);
             loadedWorkouts = workoutsList.map( a => workoutToProgram(a, 1000));
             loadedWorkouts.unshift(defaultProgram);
-            populateWorkoutSelector();
         
             if ( workoutName == null ){
-                setActiveProgram(defaultProgram);
-            } else {
-                let selectedProgram = loadedWorkouts.find( program =>
-                    program.name == workoutName);
-                setActiveProgram(selectedProgram);
-            }
+                workoutName = "Default"; 
+            } 
+            let selectedProgram = loadedWorkouts.find( program =>
+                program.name == workoutName);
+            setActiveProgram(selectedProgram);
+            
+            populateWorkoutSelector(workoutName);
         }
 
         let requester = new XMLHttpRequest();
@@ -748,13 +748,16 @@ SEVENEX.init = function() {
         setTimeout(timerLoop, 25);
     }
 
-    var populateWorkoutSelector = function(){
+    var populateWorkoutSelector = function(workoutName){
         var selector = document.getElementById('selectWorkoutSelector');
 
         loadedWorkouts.forEach( function(workout){
             var option = document.createElement('option');
             option.value = workout.name;
             option.innerHTML = workout.name;
+            if ( workout.name == workoutName ){
+                option.selected = "selected";
+            }
             selector.appendChild(option);
         });
     }
