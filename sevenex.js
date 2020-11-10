@@ -428,7 +428,7 @@ SEVENEX.init = function() {
 
         this.setActivityNames = function(currentActivity, nextActivity){
             this.situationPanel.nameDiv.innerHTML = currentActivity;
-            this.situationPanel.nextActivityDiv.innerHTML = nextActivity;
+            this.situationPanel.nextActivityDiv.innerHTML = "Next:&nbsp;" + nextActivity;
         };
 
         this.updateCounters = function(counters){
@@ -736,7 +736,7 @@ SEVENEX.init = function() {
                 }
                 
                 var nextActivityName = nextActivity ?
-                    'Next:&nbsp;' + nextActivity.name : '&nbsp;';
+                    nextActivity.name : '&nbsp;';
 
                 timerScreen.setActivityNames(activityName,nextActivityName);
             }
