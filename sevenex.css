@@ -10,7 +10,7 @@ body {
     grid-template-columns: 1fr 1fr 1fr;
 }
 .activity_name {
-	font-size: 500%;
+	font-size: 600%;
     background-color: LightSteelBlue;
 }
 .situation_counter_label {
@@ -39,8 +39,7 @@ button.big {
 }
 #nextActivityDiv {
     font-size: 400%;
-    background-color: DarkCyan;
-    color: LightGrey;
+    background-color: LightSteelBlue;
 }
 span.left_column_value {
     float: right;
