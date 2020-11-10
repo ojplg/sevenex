@@ -33,7 +33,7 @@ button.big {
     width: 5em;
 }
 #creditDiv {
-    position: absolute;
+    position: fixed;
     right: 4px;
     bottom: 4px;
 }
