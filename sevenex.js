@@ -428,7 +428,11 @@ SEVENEX.init = function() {
 
         this.setActivityNames = function(currentActivity, nextActivity){
             this.situationPanel.nameDiv.innerHTML = currentActivity;
-            this.situationPanel.nextActivityDiv.innerHTML = "Next:&nbsp;" + nextActivity;
+            if ( nextActivity != '' ) {
+                this.situationPanel.nextActivityDiv.innerHTML = "Next:&nbsp;" + nextActivity;
+            } else {
+                this.situationPanel.nextActivityDiv.innerHTML = '&nbsp;';
+            }
         };
 
         this.updateCounters = function(counters){
@@ -735,8 +739,7 @@ SEVENEX.init = function() {
                     progress.timeRemainingUntilNext = activity.time;
                 }
                 
-                var nextActivityName = nextActivity ?
-                    nextActivity.name : '&nbsp;';
+                var nextActivityName = nextActivity ? nextActivity.name : '';
 
                 timerScreen.setActivityNames(activityName,nextActivityName);
             }
