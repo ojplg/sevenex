@@ -209,9 +209,12 @@ SEVENEX.init = function() {
         this.stagesDiv = document.createElement('div');
         this.stagesDiv.id = 'stagesDiv';
 
-        this.clear = function(){ this.stagesDiv.innerHTML = ''; }
-
         this.currentIndex = 0;
+    
+        this.clear = function(){ 
+            this.stagesDiv.innerHTML = '';
+            this.currentIndex = 0;        
+        }
 
         this.setStages = function(activityNames){
             var index = 1;
